@@ -227,6 +227,28 @@ body.focus .bnav{gap:8px;flex-wrap:wrap;justify-content:center}
 .book.real .pg.s{background-image:linear-gradient(to right,rgba(60,40,15,.16),rgba(60,40,15,.05) 3%,transparent 9%),linear-gradient(to left,rgba(60,40,15,.06),transparent 3%)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .book.real .edge{background:repeating-linear-gradient(90deg,#3a342a 0 1px,#25211b 1px 2px)}}
 :root[data-theme="dark"] .book.real .edge{background:repeating-linear-gradient(90deg,#3a342a 0 1px,#25211b 1px 2px)}
+
+/* ---- search ---- */
+.sbtn{margin-left:auto;color:var(--ink)}
+.search{padding-block:22px 60px;max-width:860px}
+.search h1{font-size:clamp(1.5rem,4vw,2.1rem);margin:10px 0 14px}
+.sform{display:flex;gap:8px;flex-wrap:wrap}
+.sform input{flex:1 1 260px}
+.sform select{flex:0 1 240px;padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--ink);font:inherit;min-width:0}
+.shint{color:var(--muted);font-size:.82rem;margin:8px 0 0}
+.sstat{color:var(--muted);font-size:.9rem;margin:16px 0 4px;min-height:1.3em}
+.sbook{margin-top:22px}
+.sbook h2{font-size:1.1rem;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;margin:0 0 6px}
+.sbook h2 small{color:var(--muted);font-size:.8rem;font-weight:400}
+.hit{display:block;padding:12px 14px;border:1px solid var(--line);border-radius:8px;background:var(--paper);margin:8px 0;color:inherit;text-decoration:none}
+.hit:hover{border-color:var(--gold)}
+.hit .meta{font-size:.76rem;color:var(--muted);margin-bottom:4px}
+.hit .snip{margin:0;line-height:1.7}
+.hit .snip.ar{font-family:var(--f-ar);direction:rtl;text-align:right;font-size:1.12rem;line-height:1.9}
+.hit mark{background:rgba(201,160,60,.38);color:inherit;border-radius:2px;padding:0 1px}
+.smore{margin:6px 0 0}
+.bsearch{display:flex;gap:8px;margin-top:4px}
+.bsearch input{flex:1}
 </style>
 
 </head>
@@ -252,27 +274,27 @@ body.focus .bnav{gap:8px;flex-wrap:wrap;justify-content:center}
 "use strict";
 /* ---------- i18n ---------- */
 const UI={
- id:{tag:"Perpustakaan ilmu Islam gratis",h1:"Ilmu itu cahaya, dan cahaya tak pantas dijual",lead:"Seperti Baitul Hikmah di Baghdad, terbuka untuk siapa saja: Al-Qur'an, tafsir, dan kitab-kitab hadits dalam teks Arab dengan terjemah Indonesia, Inggris, dan Jepang. Gratis, tanpa daftar, tanpa iklan.",quranCat:"Al-Qur'an & Tafsir",adabCat:"Adab, Akhlak & Arba'in",sirahCat:"Sirah & Syamail",readEn:"Baca terjemah Inggris",readAr:"Baca teks Arab",ahmadCat:"Karya Imam Ahmad",ghazaliCat:"Imam al-Ghazali",tarikhCat:"Sejarah & Peradaban",rihlahCat:"Rihlah & Petualangan",sinaCat:"Ibnu Sina & Ilmu Pengetahuan",para:"paragraf",sec:"Bab",ayah:"ayat",verse1:"ayat",surah:"Surah",part:"Bagian",lm:"Terjemah bahasa ini belum tersedia untuk kitab ini. Ditampilkan: ",lnen:"bahasa Inggris",lnid:"bahasa Indonesia",lnar:"teks Arab",books:"kitab",texts:"teks",partial:"Sumber terbuka baru memuat sebagian kitab ini (4.305 hadits pilihan dari sekitar 27.000).",
+ id:{tag:"Perpustakaan ilmu Islam gratis",h1:"Ilmu itu cahaya, dan cahaya tak pantas dijual",lead:"Seperti Baitul Hikmah di Baghdad, terbuka untuk siapa saja: Al-Qur'an, tafsir, dan kitab-kitab hadits dalam teks Arab dengan terjemah Indonesia, Inggris, dan Jepang. Gratis, tanpa daftar, tanpa iklan.",quranCat:"Al-Qur'an & Tafsir",adabCat:"Adab, Akhlak & Arba'in",sirahCat:"Sirah & Syamail",search:"Cari",searchT:"Cari di seluruh kitab",searchPh:"Ketik kata atau kalimat (Arab, Indonesia, Inggris, Jepang)",allBooks:"Semua kitab",searching:"Mencari…",sfound:"hasil di",sbooks:"kitab",snone:"Tidak ditemukan. Coba kata lain atau ejaan lain.",smore:"Tampilkan semua",sshort:"Ketik minimal 2 huruf.",inBook:"Cari teks di kitab ini…",shint:"Harakat diabaikan, variasi alif, ya, dan ta marbuthah disamakan. Beberapa kata: semuanya harus ada.",scan:"Memeriksa",readEn:"Baca terjemah Inggris",readAr:"Baca teks Arab",ahmadCat:"Karya Imam Ahmad",ghazaliCat:"Imam al-Ghazali",tarikhCat:"Sejarah & Peradaban",rihlahCat:"Rihlah & Petualangan",sinaCat:"Ibnu Sina & Ilmu Pengetahuan",para:"paragraf",sec:"Bab",ayah:"ayat",verse1:"ayat",surah:"Surah",part:"Bagian",lm:"Terjemah bahasa ini belum tersedia untuk kitab ini. Ditampilkan: ",lnen:"bahasa Inggris",lnid:"bahasa Indonesia",lnar:"teks Arab",books:"kitab",texts:"teks",partial:"Sumber terbuka baru memuat sebagian kitab ini (4.305 hadits pilihan dari sekitar 27.000).",
   sittah:"Kutubus Sittah",other:"Kitab Hadits Lainnya",soon:"Segera Hadir",soonTag:"segera",pdf:"Edisi PDF Bahasa Indonesia (Internet Archive)",focus:"Mode fokus",pages:"Halaman",auto:"Otomatis",single:"1 halaman",double:"2 halaman",fitBook:"Proporsi buku",fitFill:"Penuh layar",settings:"Pengaturan",mark:"Pasang pembatas",unmark:"Lepas pembatas",toMark:"Ke pembatas",marks:"Pembatas buku",markSet:"Pembatas dipasang di",markOff:"Pembatas dilepas",exitFocus:"Keluar mode fokus",vol:"Jilid",item:"Semua file",pdfNote:"Tautan ke file luar di Internet Archive. Penerjemah dan penerbit tidak dicantumkan di sana; hak cipta tetap milik penerbit aslinya.",resume:"Lanjutkan membaca",open:"Buka rak",
   back:"Kembali ke rak",start:"Mulai membaca",hadith:"hadits",chapters:"kitab/bab",author:"Penyusun",died:"wafat",ah:"H",filter:"Cari bab…",
   scroll:"Gulir",book:"Buku",arabic:"Teks Arab",prev:"Sebelumnya",next:"Berikutnya",prevCh:"Bab sebelumnya",nextCh:"Bab berikutnya",page:"Hal.",of:"dari",
   loading:"Memuat kitab…",notr:"Terjemah Indonesia belum tersedia untuk hadits ini. Ditampilkan bahasa Inggris.",noja:"Terjemah Jepang sedang disiapkan. Ditampilkan bahasa Inggris.",
   emptyTx:"(Teks tidak tersedia pada sumber ini)",chapter:"Kitab",goto:"Ke hadits no.",size:"Ukuran huruf",
   note:"Sumber teks terbuka: quran-api & Hadith API (fawazahmed0), tafsir_api (spa5k), hadith-json (AhmedBaset), hadith-api (gadingnst), serta korpus OpenITI (CC BY-NC-SA 4.0); terjemah Inggris domain publik dari Wikisource & Project Gutenberg (Claud Field, Simon Ockley) untuk karya Imam Ahmad, al-Ghazali, Ibnu Khaldun, kitab rihlah, dan Ibnu Sina (teks Arab). Teks Arab kitab klasik adalah warisan bersama; sebagian terjemah tetap milik penerjemahnya dan dipakai untuk tujuan non-komersial. Terjemah Al-Qur'an: Indonesia (Kemenag RI), Inggris (M. Pickthall), Jepang (Ryoichi Mita). Penomoran mengikuti sumber dan bisa berbeda dari edisi cetak. Tanda ◌ menandai satu huruf yang rusak pada data sumber.",err:"Gagal memuat data. Coba muat ulang halaman."},
- en:{tag:"A free library of Islamic learning",h1:"Knowledge is light, and light should be free",lead:"Open to everyone, in the spirit of Baghdad's House of Wisdom: the Qur'an, tafsir and the great hadith collections in Arabic with Indonesian, English and Japanese translations. Free, no sign-up, no ads.",quranCat:"Qur'an & Tafsir",adabCat:"Manners, Character & Forty Hadith",sirahCat:"Sirah & Shama'il",readEn:"Read the English translation",readAr:"Read the Arabic text",ahmadCat:"Works of Imam Ahmad",ghazaliCat:"Imam al-Ghazali",tarikhCat:"History & Civilisation",rihlahCat:"Travels & Adventures",sinaCat:"Ibn Sina & the Sciences",para:"paragraphs",sec:"Chapter",ayah:"verses",verse1:"verse",surah:"Surah",part:"Part",lm:"This book is not yet available in this language. Showing: ",lnen:"English",lnid:"Indonesian",lnar:"Arabic text",books:"books",texts:"texts",partial:"The open source currently covers only part of this book (4,305 selected hadith of about 27,000).",
+ en:{tag:"A free library of Islamic learning",h1:"Knowledge is light, and light should be free",lead:"Open to everyone, in the spirit of Baghdad's House of Wisdom: the Qur'an, tafsir and the great hadith collections in Arabic with Indonesian, English and Japanese translations. Free, no sign-up, no ads.",quranCat:"Qur'an & Tafsir",adabCat:"Manners, Character & Forty Hadith",sirahCat:"Sirah & Shama'il",search:"Search",searchT:"Search all books",searchPh:"Type a word or phrase (Arabic, Indonesian, English, Japanese)",allBooks:"All books",searching:"Searching…",sfound:"results in",sbooks:"books",snone:"Nothing found. Try another word or spelling.",smore:"Show all",sshort:"Type at least 2 letters.",inBook:"Search the text of this book…",shint:"Vowel marks are ignored and alif, ya and ta marbuta variants are treated alike. Several words: all must appear.",scan:"Checking",readEn:"Read the English translation",readAr:"Read the Arabic text",ahmadCat:"Works of Imam Ahmad",ghazaliCat:"Imam al-Ghazali",tarikhCat:"History & Civilisation",rihlahCat:"Travels & Adventures",sinaCat:"Ibn Sina & the Sciences",para:"paragraphs",sec:"Chapter",ayah:"verses",verse1:"verse",surah:"Surah",part:"Part",lm:"This book is not yet available in this language. Showing: ",lnen:"English",lnid:"Indonesian",lnar:"Arabic text",books:"books",texts:"texts",partial:"The open source currently covers only part of this book (4,305 selected hadith of about 27,000).",
   sittah:"Kutub al-Sittah · The Six Books",other:"More Hadith Collections",soon:"Coming Soon",soonTag:"soon",pdf:"Indonesian PDF edition (Internet Archive)",focus:"Focus mode",pages:"Pages",auto:"Auto",single:"Single page",double:"Two pages",fitBook:"Book shape",fitFill:"Fill screen",settings:"Settings",mark:"Place bookmark",unmark:"Remove bookmark",toMark:"Go to bookmark",marks:"Bookmarks",markSet:"Bookmark placed at",markOff:"Bookmark removed",exitFocus:"Exit focus mode",vol:"Vol.",item:"All files",pdfNote:"Links to external files on the Internet Archive. Translator and publisher are not stated there; copyright stays with the original publisher.",resume:"Continue reading",open:"Open",
   back:"Back to shelves",start:"Start reading",hadith:"hadith",chapters:"books",author:"Compiler",died:"d.",ah:"AH",filter:"Filter chapters…",
   scroll:"Scroll",book:"Book",arabic:"Arabic text",prev:"Previous",next:"Next",prevCh:"Previous book",nextCh:"Next book",page:"Page",of:"of",
   loading:"Loading book…",notr:"No Indonesian translation for this hadith.",noja:"Japanese translation is in preparation. Showing English.",
   emptyTx:"(Text not available in this source)",chapter:"Book",goto:"Go to hadith #",size:"Text size",
   note:"Open text sources: quran-api & Hadith API (fawazahmed0), tafsir_api (spa5k), hadith-json (AhmedBaset), hadith-api (gadingnst), and the OpenITI corpus (CC BY-NC-SA 4.0); public-domain English translations from Wikisource & Project Gutenberg (Claud Field, Simon Ockley) for the works of Imam Ahmad, al-Ghazali, Ibn Khaldun, the travel books and Ibn Sina (Arabic text). The classical Arabic texts are a shared heritage; some translations remain the property of their translators and are used here non-commercially. Qur'an translations: Indonesian (Ministry of Religious Affairs, Indonesia), English (M. Pickthall), Japanese (Ryoichi Mita). Numbering follows the sources and may differ from print editions. The mark ◌ flags a letter damaged in the source data.",err:"Could not load the data. Please reload the page."},
- ar:{tag:"مكتبة علمية إسلامية مجانية",h1:"العلم نور، والنور لا يُباع",lead:"على خطى بيت الحكمة في بغداد: القرآن الكريم والتفاسير وأمهات كتب الحديث، مجانًا للجميع.",quranCat:"القرآن وعلومه",adabCat:"الآداب والأخلاق والأربعينيات",sirahCat:"السيرة والشمائل",readEn:"اقرأ الترجمة الإنجليزية",readAr:"اقرأ النص العربي",ahmadCat:"مؤلفات الإمام أحمد",ghazaliCat:"الإمام الغزالي",tarikhCat:"التاريخ والعمران",rihlahCat:"الرحلات والمغامرات",sinaCat:"ابن سينا والعلوم",para:"فقرة",sec:"باب",ayah:"آية",verse1:"الآية",surah:"سورة",part:"جزء",lm:"",lnen:"",lnid:"",lnar:"",books:"كتابًا",texts:"نصًّا",partial:"المصدر المفتوح يتضمن جزءًا من الكتاب فقط.",
+ ar:{tag:"مكتبة علمية إسلامية مجانية",h1:"العلم نور، والنور لا يُباع",lead:"على خطى بيت الحكمة في بغداد: القرآن الكريم والتفاسير وأمهات كتب الحديث، مجانًا للجميع.",quranCat:"القرآن وعلومه",adabCat:"الآداب والأخلاق والأربعينيات",sirahCat:"السيرة والشمائل",search:"بحث",searchT:"البحث في جميع الكتب",searchPh:"اكتب كلمة أو عبارة",allBooks:"كل الكتب",searching:"جارٍ البحث…",sfound:"نتيجة في",sbooks:"كتاب",snone:"لا توجد نتائج.",smore:"عرض الكل",sshort:"اكتب حرفين على الأقل.",inBook:"ابحث في نص هذا الكتاب…",shint:"تُتجاهل الحركات؛ أ/إ/آ = ا، ى = ي، ة = ه.",scan:"فحص",readEn:"اقرأ الترجمة الإنجليزية",readAr:"اقرأ النص العربي",ahmadCat:"مؤلفات الإمام أحمد",ghazaliCat:"الإمام الغزالي",tarikhCat:"التاريخ والعمران",rihlahCat:"الرحلات والمغامرات",sinaCat:"ابن سينا والعلوم",para:"فقرة",sec:"باب",ayah:"آية",verse1:"الآية",surah:"سورة",part:"جزء",lm:"",lnen:"",lnid:"",lnar:"",books:"كتابًا",texts:"نصًّا",partial:"المصدر المفتوح يتضمن جزءًا من الكتاب فقط.",
   sittah:"الكتب الستة",other:"كتب حديث أخرى",soon:"قريبًا",soonTag:"قريبًا",pdf:"نسخة PDF بالإندونيسية (أرشيف الإنترنت)",vol:"المجلد",focus:"وضع التركيز",pages:"الصفحات",auto:"تلقائي",single:"صفحة واحدة",double:"صفحتان",fitBook:"شكل الكتاب",fitFill:"ملء الشاشة",settings:"الإعدادات",mark:"ضع علامة",unmark:"أزل العلامة",toMark:"إلى العلامة",marks:"العلامات",markSet:"وُضعت العلامة عند",markOff:"أُزيلت العلامة",exitFocus:"الخروج من وضع التركيز",item:"كل الملفات",pdfNote:"روابط لملفات خارجية على أرشيف الإنترنت.",resume:"متابعة القراءة",open:"افتح",
   back:"العودة إلى الرفوف",start:"ابدأ القراءة",hadith:"حديث",chapters:"كتاب",author:"المصنف",died:"ت",ah:"هـ",filter:"ابحث في الكتب…",
   scroll:"تمرير",book:"كتاب",arabic:"النص العربي",prev:"السابق",next:"التالي",prevCh:"الكتاب السابق",nextCh:"الكتاب التالي",page:"صفحة",of:"من",
   loading:"جارٍ التحميل…",notr:"",noja:"",emptyTx:"(النص غير متوفر في هذا المصدر)",chapter:"كتاب",goto:"إلى الحديث رقم",size:"حجم الخط",
   note:"مصدر النصوص: مجموعة Hadith API المفتوحة (ملكية عامة). سيضاف مسند الإمام أحمد ورياض الصالحين وغيرها تباعًا.",err:"تعذر تحميل البيانات."},
- ja:{quranCat:"クルアーンと注釈",adabCat:"礼儀・品性・40ハディース",sirahCat:"預言者伝",readEn:"英訳を読む",readAr:"アラビア語原文を読む",ahmadCat:"イマーム・アフマドの著作",ghazaliCat:"ガザーリー",tarikhCat:"歴史と文明",rihlahCat:"旅行記と冒険",sinaCat:"イブン・スィーナーと諸学",para:"段落",sec:"章",ayah:"節",verse1:"節",surah:"スーラ",part:"部",lm:"この本はまだ日本語訳がありません。表示中：",lnen:"英語",lnid:"インドネシア語",lnar:"アラビア語原文",books:"冊",texts:"項目",partial:"公開データにはこの本の一部のみが含まれています。",tag:"無料のイスラーム学術図書館",h1:"知識は光、光は誰にでも開かれるべきもの",lead:"かつてのバグダードの「知恵の館」のように、誰にでも開かれた図書館。クルアーン、タフスィール、主要なハディース集をアラビア語原文と日本語・インドネシア語・英語訳で。無料・登録不要・広告なし。",
+ ja:{quranCat:"クルアーンと注釈",adabCat:"礼儀・品性・40ハディース",sirahCat:"預言者伝",search:"検索",searchT:"全書を検索",searchPh:"語句を入力（アラビア語・インドネシア語・英語・日本語）",allBooks:"すべての本",searching:"検索中…",sfound:"件／",sbooks:"冊",snone:"見つかりませんでした。",smore:"すべて表示",sshort:"2文字以上入力してください。",inBook:"この本の本文を検索…",shint:"母音記号は無視されます。複数の語はすべて含む結果を表示します。",scan:"確認中",readEn:"英訳を読む",readAr:"アラビア語原文を読む",ahmadCat:"イマーム・アフマドの著作",ghazaliCat:"ガザーリー",tarikhCat:"歴史と文明",rihlahCat:"旅行記と冒険",sinaCat:"イブン・スィーナーと諸学",para:"段落",sec:"章",ayah:"節",verse1:"節",surah:"スーラ",part:"部",lm:"この本はまだ日本語訳がありません。表示中：",lnen:"英語",lnid:"インドネシア語",lnar:"アラビア語原文",books:"冊",texts:"項目",partial:"公開データにはこの本の一部のみが含まれています。",tag:"無料のイスラーム学術図書館",h1:"知識は光、光は誰にでも開かれるべきもの",lead:"かつてのバグダードの「知恵の館」のように、誰にでも開かれた図書館。クルアーン、タフスィール、主要なハディース集をアラビア語原文と日本語・インドネシア語・英語訳で。無料・登録不要・広告なし。",
   sittah:"六書（クトゥブ・スィッタ）",other:"その他のハディース集",soon:"近日公開",soonTag:"近日",pdf:"インドネシア語PDF版（Internet Archive）",vol:"第",focus:"集中モード",pages:"ページ",auto:"自動",single:"1ページ",double:"見開き",fitBook:"本の比率",fitFill:"全画面",settings:"設定",mark:"しおりを挟む",unmark:"しおりを外す",toMark:"しおりへ",marks:"しおり",markSet:"しおりを挟みました：",markOff:"しおりを外しました",exitFocus:"集中モードを終了",item:"全ファイル",pdfNote:"Internet Archive上の外部ファイルへのリンクです。著作権は原出版社に帰属します。",resume:"続きを読む",open:"開く",
   back:"本棚に戻る",start:"読み始める",hadith:"ハディース",chapters:"巻",author:"編者",died:"没",ah:"ヒジュラ暦",filter:"章を検索…",
   scroll:"スクロール",book:"本",arabic:"アラビア語",prev:"前へ",next:"次へ",prevCh:"前の巻",nextCh:"次の巻",page:"ページ",of:"/",
@@ -326,6 +348,7 @@ function route(){
   let m;
   if((m=h.match(/^read-([a-z]+)-([0-9_]+)(?:-at-([0-9_]+))?$/)))return {v:"read",b:m[1],s:dec(m[2]),n:m[3]?parseFloat(dec(m[3])):null};
   if((m=h.match(/^kitab-([a-z]+)$/)))return {v:"book",b:m[1]};
+  if(h==="cari"||h.startsWith("cari?")){const u=new URLSearchParams(h.slice(5));return {v:"search",b:u.get("b")||"all",q:u.get("q")||""}}
   return {v:"lib"};
 }
 function go(hash){if(location.hash==="#"+hash)render();else location.hash=hash}
@@ -348,7 +371,7 @@ function renderLib(){
   const six=["bukhari","muslim","abudawud","tirmidhi","nasai","ibnmajah"];
   const lastB=last&&findBook(last.b);
   app.innerHTML=`
-  <header class="top"><div class="wrap"><a class="brand" href="#"><b>Maktabah Ilmu</b><span>مكتبة العلم</span></a>${langSeg()}</div></header>
+  <header class="top"><div class="wrap"><a class="brand" href="#"><b>Maktabah Ilmu</b><span>مكتبة العلم</span></a><a class="iconbtn sbtn" href="#cari" aria-label="${esc(t("search"))}" title="${esc(t("search"))}"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M13 13l4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></a>${langSeg()}</div></header>
   <main class="wrap">
     <section class="hero">
       <div class="ayah">وَقُل رَّبِّ زِدْنِي عِلْمًا</div>
@@ -374,7 +397,7 @@ function renderBook(id){
   const last=store.get("last",null);
   const cont=last&&last.b===id?last:null;
   app.innerHTML=`
-  <header class="top"><div class="wrap"><a class="brand" href="#"><b>Maktabah Ilmu</b><span>مكتبة العلم</span></a>${langSeg()}</div></header>
+  <header class="top"><div class="wrap"><a class="brand" href="#"><b>Maktabah Ilmu</b><span>مكتبة العلم</span></a><a class="iconbtn sbtn" href="#cari" aria-label="${esc(t("search"))}" title="${esc(t("search"))}"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M13 13l4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></a>${langSeg()}</div></header>
   <main class="wrap"><div class="detail">
     <div class="cover" style="--c:${COLORS[id]}"><svg aria-hidden="true"><rect width="100%" height="100%" fill="url(#girih)"/></svg><div class="frame"></div>
       <div class="ca">${esc(b.ar)}</div><div class="ce">${esc(b.en)}</div><div class="ce" style="font-size:.8rem;opacity:.8">${esc(b.auth)}</div></div>
@@ -386,10 +409,12 @@ function renderBook(id){
       <div class="resume"><a class="btn" href="${cont?atLink(id,cont.s,cont.n):"#read-"+id+"-"+enc(b.secs[0].k)}">${esc(cont?t("resume"):t("start"))}</a>${b.pair&&findBook(b.pair)?`<a class="btn ghost pairlink" href="#kitab-${b.pair}">${esc(findBook(b.pair).langs.includes("eng")?t("readEn"):t("readAr"))} →</a>`:""}${getMarks()[id]?`<a class="btn ghost" href="${atLink(id,getMarks()[id].s,getMarks()[id].n)}"><span style="color:#B33A3A;display:inline-flex">${RIB_F}</span> ${esc(t("toMark"))} · ${esc(unitOf(b))} ${fmt(getMarks()[id].n)}</a>`:""}</div>
       ${b.secs.length>6?`<input class="filter" id="tocfilter" type="search" placeholder="${esc(t("filter"))}">`:""}
       ${b.partial?`<p class="note" style="padding:0">${esc(t("partial"))}</p>`:""}
+      <form class="bsearch" id="bsearch"><input class="filter" type="search" name="q" placeholder="${esc(t("inBook"))}"><button class="btn">${esc(t("search"))}</button></form>
       ${pdfBox(id)}
       <nav class="toc" id="toc">${b.secs.map((s,i)=>`<button data-s="${enc(s.k)}" data-name="${esc((s.t+" "+(s.ta||"")).toLowerCase())}"><span class="no">${s.k==="0"&&s.f>1?"+":i+(b.secs[0].k==="0"&&b.secs[0].f<=1?0:1)}</span><span class="nm${isArT(secTitle(s))?" art":""}">${esc(secTitle(s))}${b.kind!=="hadith"&&s.ta&&S.lang!=="ar"?` <span style="font-family:var(--f-ar);color:var(--gold)">${esc(s.ta)}</span>`:""}</span><span class="ct">${fmt(s.c)} · ${fmt(s.f)}–${fmt(s.l)}</span></button>`).join("")}</nav>
     </div></div></main>`;
   app.querySelectorAll("#toc button").forEach(x=>x.onclick=()=>go(`read-${id}-${x.dataset.s}`));
+  const bsf=document.getElementById("bsearch");if(bsf)bsf.onsubmit=e=>{e.preventDefault();const q=bsf.q.value.trim();if(q)go(`cari?b=${id}&q=${encodeURIComponent(q)}`)};
   const f=document.getElementById("tocfilter");
   if(f)f.oninput=()=>{const q=f.value.trim().toLowerCase();app.querySelectorAll("#toc button").forEach(x=>x.hidden=q&&!x.dataset.name.includes(q))};
   bindLang(app,render);
@@ -434,6 +459,7 @@ async function renderRead(bid,sk,anchorN){
   <header class="top rbar"><div class="wrap">
     <a class="iconbtn" href="#kitab-${bid}" aria-label="${esc(t("back"))}">←</a>
     <div class="ttl"><select id="secsel" aria-label="${esc(t("chapter"))}">${b.secs.map(s=>`<option value="${enc(s.k)}"${s.k===sec.k?" selected":""}>${esc(bookTitle(b))} · ${esc(secTitle(s))}</option>`).join("")}</select></div>
+    <a class="iconbtn" href="#cari?b=${bid}" aria-label="${esc(t("search"))}" title="${esc(t("search"))}"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M13 13l4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></a>
     <button class="iconbtn" id="setbtn" aria-expanded="${!!S.panel}" aria-controls="setpanel" title="${esc(t("size"))}">Aa</button>
     <button class="iconbtn markbtn" aria-label="${esc(t("mark"))}" title="${esc(t("mark"))}">${RIB_O}</button>
     <button class="iconbtn" id="focusbtn" title="${esc(t("focus"))}" aria-label="${esc(t("focus"))}">⛶</button>
@@ -652,6 +678,111 @@ function currentAnchor(){
   return null;
 }
 
+
+/* ---------- search ---------- */
+const HAR=/[ؐ-ًؚ-ٰٟۖ-ۭـ]/g;
+const FOLDM={"أ":"ا","إ":"ا","آ":"ا","ٱ":"ا","ى":"ي","ة":"ه","ؤ":"و","ئ":"ي"};
+const unhar=x=>x.replace(HAR,"");
+const fold=x=>x.replace(/[أإآٱىةؤئ]/g,c=>FOLDM[c]).toLowerCase();   // 1:1 per huruf
+const PRE=/^(?:وبال|وال|فال|بال|كال|لل|ال|و|ف|ب|ل|ك)(?=..)/;
+const stem=w=>/[؀-ۿ]/.test(w[0])?w.replace(PRE,""):w;
+const TOKQ=/[a-z0-9À-ɏ؀-ۿ]{2,}/g;
+const skey=w=>[...w.slice(0,2)].map(c=>/[a-z0-9]/.test(c)?c:c.codePointAt(0).toString(16)).join("");
+const jget=u=>fetch(u).then(r=>{if(!r.ok)throw new Error(r.status);return r.json()});
+const SIDX={};
+async function candidates(q){
+  const toks=[...new Set(fold(unhar(q)).match(TOKQ)||[])].filter(w=>!/^\d+$/.test(w)).map(stem).filter(w=>w.length>=2);
+  if(!toks.length)return null;
+  const books=SIDX.books||(SIDX.books=await jget("s/books.json"));
+  let set=null;
+  for(const w of toks){
+    const k=skey(w);const m=await (SIDX[k]||(SIDX[k]=jget("s/"+k+".json").catch(()=>({}))));
+    const hit=new Set();for(const key in m)if(key.startsWith(w))for(const i of m[key])hit.add(i);
+    set=set?new Set([...set].filter(i=>hit.has(i))):hit;
+    if(!set.size)break;
+  }
+  return [...set].map(i=>books[i]);
+}
+const FIELDS={id:[3,2,1,6,5],en:[2,3,1,6,5],ar:[1,6,2,3,5],ja:[5,2,3,1,6]};
+function snippet(r,needles){
+  for(const fi of FIELDS[S.lang]||FIELDS.id){
+    const raw=r[fi];if(typeof raw!=="string"||!raw)continue;
+    const disp=unhar(raw).replace(/\s+/g," "),low=fold(disp);
+    const at=low.indexOf(needles[0]);if(at<0)continue;
+    const a=Math.max(0,at-90),b=Math.min(disp.length,at+needles[0].length+150);
+    const marks=[];for(const nd of needles){let i=low.indexOf(nd,a);while(i>=0&&i<b){marks.push([i,i+nd.length]);i=low.indexOf(nd,i+nd.length)}}
+    marks.sort((x,y)=>x[0]-y[0]);
+    let out="",pos=a;for(const [x,y] of marks){if(x<pos)continue;out+=esc(disp.slice(pos,x))+"<mark>"+esc(disp.slice(x,Math.min(y,b)))+"</mark>";pos=Math.min(y,b)}
+    out+=esc(disp.slice(pos,b));
+    return {html:(a>0?"… ":"")+out+(b<disp.length?" …":""),ar:fi===1||fi===6};
+  }
+  return null;
+}
+function renderSearch(scope,q){
+  const books=S.index;
+  app.innerHTML=`
+  <header class="top"><div class="wrap"><a class="brand" href="#"><b>Maktabah Ilmu</b><span>مكتبة العلم</span></a>${langSeg()}</div></header>
+  <main class="wrap search">
+    <a class="btn ghost back" href="${scope!=="all"&&findBook(scope)?"#kitab-"+scope:"#"}">← ${esc(t("back"))}</a>
+    <h1>${esc(t("searchT"))}</h1>
+    <form class="sform" id="sform"><input class="filter" id="sq" type="search" value="${esc(q)}" placeholder="${esc(t("searchPh"))}" autocomplete="off">
+      <select id="sb" aria-label="${esc(t("books"))}"><option value="all">${esc(t("allBooks"))}</option>${books.map(b=>`<option value="${b.id}"${b.id===scope?" selected":""}>${esc(bookTitle(b))}</option>`).join("")}</select>
+      <button class="btn">${esc(t("search"))}</button></form>
+    <p class="shint">${esc(t("shint"))}</p>
+    <p class="sstat" id="sstat" aria-live="polite"></p>
+    <div id="sres"></div>
+  </main>`;
+  bindLang(app,render);
+  const form=document.getElementById("sform");
+  form.onsubmit=e=>{e.preventDefault();const nq=document.getElementById("sq").value.trim();go(`cari?b=${document.getElementById("sb").value}&q=${encodeURIComponent(nq)}`)};
+  if(!q){document.getElementById("sq").focus();return}
+  runSearch(scope,q);
+}
+async function runSearch(scope,q){
+  const token=(S.sTok=(S.sTok||0)+1);
+  const alive=()=>S.sTok===token&&route().v==="search";
+  const stat=document.getElementById("sstat"),res=document.getElementById("sres");
+  const needles=[...new Set(fold(unhar(q)).split(/\s+/).filter(Boolean))];
+  if(needles.join("").length<2){stat.textContent=t("sshort");return}
+  stat.textContent=t("searching");
+  let ids;
+  if(scope!=="all"&&findBook(scope))ids=[scope];
+  else{
+    let c=null;try{c=await candidates(q)}catch(e){}
+    ids=c===null?S.index.filter(b=>/[぀-ヿ一-鿿]/.test(q)?b.langs.includes("jpn"):true).map(b=>b.id):S.index.map(b=>b.id).filter(id=>c.includes(id));
+  }
+  let total=0,nb=0,done=0;
+  const upd=fin=>{stat.textContent=fin?(total?`${fmt(total)} ${t("sfound")} ${fmt(nb)} ${t("sbooks")}`:t("snone")):`${t("searching")} ${t("scan")} ${fmt(done)}/${fmt(ids.length)} ${t("sbooks")} · ${fmt(total)}`};
+  upd(false);
+  for(const bid of ids){
+    if(!alive())return;
+    const b=findBook(bid);const hits=[];
+    for(let ci=0;ci<b.chunks;ci++){
+      let ch;try{ch=S.chunks[bid+"-"+ci]?await S.chunks[bid+"-"+ci]:await jget("d/"+bid+"-"+ci+".json")}catch(e){continue}
+      if(!alive())return;
+      for(const k in ch)for(const r of ch[k]){
+        if(r[8])continue;
+        let txt="";for(const fi of [1,2,3,5,6]){const v=r[fi];if(typeof v==="string"&&v)txt+=" "+v}
+        const low=fold(unhar(txt));
+        if(needles.every(nd=>low.includes(nd)))hits.push([k,r]);
+      }
+    }
+    done++;
+    if(hits.length){
+      total+=hits.length;nb++;
+      const box=document.createElement("section");box.className="sbook";
+      const item=([k,r])=>{const sec=b.secs.find(x=>x.k===k);const sn=snippet(r,needles);
+        return `<a class="hit" href="${atLink(bid,k,r[0])}"><div class="meta">${esc(sec?secTitle(sec):k)} · ${Number.isInteger(r[0])?fmt(r[0]):""}</div>${sn?`<p class="snip${sn.ar?" ar":""}"${sn.ar?' lang="ar"':""}>${sn.html}</p>`:""}</a>`};
+      box.innerHTML=`<h2><a href="#kitab-${bid}">${esc(bookTitle(b))}</a><small>${fmt(hits.length)} ${esc(t("sfound").replace(/\s*(di|in|في|／)\s*$/,""))}</small></h2>${hits.slice(0,12).map(item).join("")}${hits.length>12?`<button class="btn ghost smore">${esc(t("smore"))} (${fmt(hits.length)})</button>`:""}`;
+      const mb=box.querySelector(".smore");if(mb)mb.onclick=()=>{mb.insertAdjacentHTML("beforebegin",hits.slice(12,2000).map(item).join(""));mb.remove()};
+      res.appendChild(box);
+    }
+    upd(false);
+    await new Promise(r=>setTimeout(r,0));
+  }
+  if(alive())upd(true);
+}
+
 /* ---------- main render ---------- */
 let rsz;window.addEventListener("resize",()=>{clearTimeout(rsz);rsz=setTimeout(()=>{const r=route();if(r.v==="read"&&S.mode==="book")renderRead(r.b,r.s,currentAnchor())},300)});
 async function render(){
@@ -664,6 +795,7 @@ async function render(){
   if(r.v==="read")return renderRead(r.b,r.s,r.n);
   window.scrollTo(0,0);
   if(r.v==="book")return renderBook(r.b);
+  if(r.v==="search")return renderSearch(r.b,r.q);
   renderLib();
 }
 render();

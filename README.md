@@ -12,6 +12,8 @@ d/index.json      katalog kitab: judul, bab/surah, dan file data mana yang memua
 d/<kitab>-<n>.json  isi kitab, dipecah per ~1,6 MB supaya cepat dimuat
 scripts/          skrip Python yang membuat folder d/ dari sumber data terbuka
 .nojekyll         supaya GitHub Pages tidak mengolah ulang file
+s/                indeks kata untuk pencarian (dibuat oleh scripts/build_search.py; jalankan ulang setelah menambah kitab)
+vendor/           StPageFlip (efek halaman melengkung)
 ```
 
 Format satu baris teks di `d/<kitab>-<n>.json`:
