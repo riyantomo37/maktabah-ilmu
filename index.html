@@ -1,0 +1,602 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Perpustakaan ilmu Islam gratis: Al-Qur'an, tafsir, Kutubus Sittah dan kitab hadits lainnya dalam teks Arab dengan terjemah Indonesia, Inggris, dan Jepang.">
+<meta name="theme-color" content="#0E4A38">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230E4A38'/%3E%3Cpath d='M9 7h14v18l-7-4-7 4z' fill='%23D4AC5C'/%3E%3C/svg%3E">
+<style>
+:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;font:14px/1.5 system-ui,sans-serif}
+img{max-width:100%}
+[hidden]{display:none!important}
+</style>
+<title>Maktabah Ilmu</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Amiri+Quran&family=Marcellus&family=Spectral:ital,wght@0,400;0,500;1,400&family=Figtree:wght@400;500;600&family=Noto+Serif+JP:wght@400;600&display=swap">
+<style>
+/* Layout: a walnut bookcase as the home screen; a paper reader with scroll or page-turn modes. */
+:root{
+  --bg:#E9ECE6; --bg2:#DFE3DC; --paper:#FAF9F4; --ink:#18241F; --muted:#5A6A62; --line:#C9D0C7;
+  --gold:#94701F; --gold-soft:#E8D9AE; --lapis:#234A73; --wood:#3B2A1F; --wood2:#2A1D15; --shadow:rgba(24,36,31,.16);
+  --f-display:"Marcellus","Cormorant",Georgia,serif;
+  --f-body:"Spectral","Noto Serif JP",Georgia,serif;
+  --f-ui:"Figtree","Noto Sans JP",system-ui,sans-serif;
+  --f-ar:"Amiri","Noto Naskh Arabic","Traditional Arabic",serif;
+  --fs:1.06rem;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0F1613; --bg2:#151E1A; --paper:#19221E; --ink:#E3E8E1; --muted:#97A69E; --line:#2C3833;
+  --gold:#D4AC5C; --gold-soft:#3A3220; --lapis:#8FB3DA; --wood:#2B1F17; --wood2:#1A120D; --shadow:rgba(0,0,0,.45); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0F1613; --bg2:#151E1A; --paper:#19221E; --ink:#E3E8E1; --muted:#97A69E; --line:#2C3833;
+  --gold:#D4AC5C; --gold-soft:#3A3220; --lapis:#8FB3DA; --wood:#2B1F17; --wood2:#1A120D; --shadow:rgba(0,0,0,.45); color-scheme:dark}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-ui);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+*{box-sizing:border-box}
+button,select{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:4px}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-display);font-weight:400;text-wrap:balance;margin:0}
+.lang-ja h1,.lang-ja h2,.lang-ja h3{font-family:"Noto Serif JP",serif;font-weight:600}
+
+/* top bar */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:12px;padding-block:10px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;margin-right:auto;min-width:0}
+.brand b{font-family:var(--f-display);font-weight:400;font-size:1.3rem;letter-spacing:.02em}
+.brand span{font-family:var(--f-ar);color:var(--gold);font-size:1.25rem}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:2px;background:var(--bg2)}
+.seg button{border:0;background:none;padding:5px 11px;border-radius:999px;font-size:.82rem;font-weight:500;color:var(--muted);white-space:nowrap}
+.seg button[aria-pressed="true"]{background:var(--paper);color:var(--ink);box-shadow:0 1px 3px var(--shadow)}
+.seg button.ar{font-family:var(--f-ar);font-size:.95rem;line-height:1.1}
+
+/* library */
+.hero{padding-block:34px 18px;display:grid;gap:10px}
+.hero h1{font-size:clamp(1.9rem,5vw,3rem);line-height:1.1}
+.hero p{margin:0;color:var(--muted);max-width:60ch;font-size:1rem}
+.hero .ayah{font-family:var(--f-ar);color:var(--gold);font-size:1.5rem;direction:rtl}
+.resume{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:6px}
+.btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);padding:9px 16px;border-radius:999px;font-weight:600;font-size:.88rem;text-decoration:none}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.case{background:linear-gradient(180deg,var(--wood),var(--wood2));border-radius:10px;padding:18px 18px 0;margin-block:14px 40px;box-shadow:inset 0 0 0 6px rgba(0,0,0,.18),0 10px 30px var(--shadow)}
+.shelf{margin-bottom:22px}
+.shelf h2{color:#E9D9AE;font-size:1rem;letter-spacing:.14em;text-transform:uppercase;font-family:var(--f-ui);font-weight:600;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.shelf h2 small{font-family:var(--f-ar);letter-spacing:0;text-transform:none;font-size:1.1rem;color:#C9A55A;font-weight:400}
+.row{display:flex;align-items:flex-end;gap:6px;padding:14px 8px 0;overflow-x:auto;scrollbar-width:thin;border-bottom:12px solid #1A110B;box-shadow:0 10px 0 -2px rgba(0,0,0,.35);min-height:236px}
+.spine{flex:0 0 auto;width:var(--w,58px);height:var(--h,210px);border:0;border-radius:3px 3px 1px 1px;background:var(--c);color:#EBD9A6;position:relative;padding:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:space-between;
+  box-shadow:inset 3px 0 0 rgba(255,255,255,.12),inset -5px 0 8px rgba(0,0,0,.35),2px 0 0 rgba(0,0,0,.3);
+  transition:transform .25s ease;transform-origin:bottom center}
+.spine:hover,.spine:focus-visible{transform:translateY(-10px)}
+.spine::before,.spine::after{content:"";position:absolute;left:6px;right:6px;height:2px;background:#C9A55A;opacity:.85;box-shadow:0 5px 0 #C9A55A}
+.spine::before{top:12px}.spine::after{bottom:20px}
+.spine .t{writing-mode:vertical-rl;font-family:var(--f-display);font-size:.92rem;letter-spacing:.04em;margin-top:26px;max-height:128px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.spine .a{font-family:var(--f-ar);font-size:1rem;margin-bottom:28px;writing-mode:vertical-rl;max-height:76px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.spine.soon{filter:saturate(.25) brightness(.8);cursor:default}
+.spine.soon:hover{transform:none}
+.spine .tag{position:absolute;bottom:4px;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;font-family:var(--f-ui);opacity:.85}
+.note{color:var(--muted);font-size:.86rem;max-width:70ch;padding-bottom:40px}
+.note a{color:var(--lapis)}
+.ribbon{position:absolute;top:-1px;right:34px;width:22px;height:54px;background:#9E2B2B;clip-path:polygon(0 0,100% 0,100% 100%,50% 78%,0 100%);box-shadow:0 2px 4px var(--shadow);z-index:2;pointer-events:none}
+.spine .rb{position:absolute;top:-6px;right:7px;width:10px;height:64px;background:#C43C3C;clip-path:polygon(0 0,100% 0,100% 100%,50% calc(100% - 6px),0 100%);z-index:1;box-shadow:0 1px 2px rgba(0,0,0,.4)}
+.marks{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.marks .lbl{font-size:.78rem;color:var(--muted);display:inline-flex;align-items:center;gap:6px}
+.chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:5px 12px;font-size:.84rem;color:var(--ink);text-decoration:none}
+.chip:hover{border-color:var(--gold)}
+.chip svg,.iconbtn svg,.lbl svg{width:14px;height:14px}
+.iconbtn.on{color:#B33A3A;border-color:#B33A3A}
+.h.marked{border-left:4px solid #B33A3A}
+.tomark{font-size:.8rem}
+.chip[hidden]{display:none}
+.pdfbox{border:1px solid var(--line);border-radius:8px;padding:14px 16px;background:var(--paper);display:grid;gap:10px}
+.pdfbox h3{font-family:var(--f-ui);font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;font-weight:600;color:var(--gold)}
+.pdfbox .vols{display:flex;flex-wrap:wrap;gap:6px}
+.pdfbox .vols a{border:1px solid var(--line);border-radius:999px;padding:4px 11px;font-size:.82rem;color:var(--lapis);text-decoration:none;font-variant-numeric:tabular-nums}
+.pdfbox .vols a:hover{border-color:var(--lapis)}
+.pdfbox p{margin:0;font-size:.78rem;color:var(--muted)}
+a.spine{text-decoration:none}
+
+/* book detail */
+.detail{display:grid;grid-template-columns:minmax(200px,280px) 1fr;gap:32px;padding-block:28px 50px}
+@media (max-width:720px){.detail{grid-template-columns:1fr;gap:20px}}
+.cover{aspect-ratio:3/4.2;max-width:100%;width:100%;border-radius:4px 10px 10px 4px;background:var(--c);color:#EBD9A6;position:relative;overflow:hidden;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:10px;padding:24px;box-shadow:inset 10px 0 14px rgba(0,0,0,.35),0 14px 30px var(--shadow)}
+@media (max-width:720px){.cover{max-width:220px;margin-inline:auto}}
+.cover svg{position:absolute;inset:0;width:100%;height:100%;opacity:.16}
+.cover .ca{font-family:var(--f-ar);font-size:1.9rem;line-height:1.3;position:relative}
+.cover .ce{font-family:var(--f-display);font-size:1.05rem;letter-spacing:.06em;position:relative}
+.cover .frame{position:absolute;inset:14px;border:1px solid rgba(233,217,174,.55);border-radius:3px}
+.meta{min-width:0;display:grid;gap:14px;align-content:start}
+.meta .back{justify-self:start}
+.meta h1{font-size:clamp(1.7rem,4vw,2.5rem)}
+.meta .arname{font-family:var(--f-ar);font-size:1.6rem;color:var(--gold);direction:rtl;text-align:left}
+.facts{display:flex;flex-wrap:wrap;gap:8px 18px;color:var(--muted);font-size:.88rem}
+.facts b{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
+.toc{border-top:1px solid var(--line);margin-top:6px}
+.toc button{display:grid;grid-template-columns:2.6rem 1fr auto;gap:10px;align-items:baseline;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);padding:11px 4px}
+.toc button:hover{background:var(--bg2)}
+.toc .no{color:var(--gold);font-variant-numeric:tabular-nums;font-size:.85rem}
+.toc .nm{font-family:var(--f-body);font-size:1rem;min-width:0}
+.toc .ct{color:var(--muted);font-size:.78rem;font-variant-numeric:tabular-nums;white-space:nowrap}
+.filter{width:100%;padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--ink);font:inherit}
+
+/* reader */
+.rbar .wrap{gap:8px;flex-wrap:nowrap}
+.rbar .ttl{min-width:0;flex:1 1 120px;display:flex;align-items:center;gap:8px}
+.rbar .ttl select{min-width:0;max-width:100%;flex:1;border:1px solid var(--line);border-radius:8px;background:var(--paper);padding:6px 8px;font-size:.86rem}
+.iconbtn{border:1px solid var(--line);background:var(--paper);border-radius:999px;width:34px;height:34px;display:inline-grid;place-items:center;flex:0 0 auto}
+.tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+@media (max-width:700px){.tools{flex-wrap:nowrap;overflow-x:auto;width:100%;padding-bottom:2px;scrollbar-width:none}.tools>*{flex:0 0 auto}}
+.chk{display:inline-flex;align-items:center;gap:6px;font-size:.82rem;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:5px 10px;background:var(--bg2)}
+.chk input{accent-color:var(--gold);margin:0}
+.chap-head{text-align:center;padding-block:30px 10px;display:grid;gap:6px}
+.chap-head .k{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:600}
+.chap-head h2{font-size:clamp(1.4rem,3.5vw,2rem)}
+.chap-head p{margin:0;color:var(--muted);font-size:.85rem}
+.scroll{max-width:760px;margin:0 auto;padding-bottom:40px}
+.h{background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:20px 22px;margin-block:14px;content-visibility:auto;contain-intrinsic-size:auto 260px}
+.hn{display:flex;align-items:center;gap:10px;font-size:.76rem;color:var(--muted);margin-bottom:10px;min-width:0}
+.hn .num{font-family:var(--f-display);color:var(--gold);font-size:1rem;border:1px solid var(--gold);border-radius:999px;min-width:2.2rem;padding:0 8px;text-align:center;font-variant-numeric:tabular-nums}
+.hn .grade{margin-left:auto;font-size:.7rem;color:var(--gold);border:1px solid var(--gold-soft);padding:1px 8px;border-radius:999px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:65%}
+.ar{font-family:var(--f-ar);direction:rtl;text-align:right;font-size:calc(var(--fs) * 1.28);line-height:1.95;margin:0 0 12px}
+.tr{font-family:var(--f-body);font-size:var(--fs);line-height:1.72;margin:0;white-space:pre-line}
+.setpanel{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;padding-block:4px 12px}
+.setpanel[hidden]{display:none!important}
+.fexit{position:fixed;z-index:30;top:calc(10px + env(safe-area-inset-top,0px));right:calc(12px + env(safe-area-inset-right,0px));display:flex;gap:6px;opacity:.55;transition:opacity .2s}
+.fexit:hover,.fexit:focus-within{opacity:1}
+body.focus .rbar,body.focus .pager{display:none}
+body.focus .bookstage{padding-block:max(6px,env(safe-area-inset-top,0px)) 4px}
+.bookstage{padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
+body.focus .scroll{padding-top:30px}
+.lang-ja .tr.ja{font-family:"Noto Serif JP",serif}
+.tr[lang="ja"]{font-family:"Noto Serif JP",serif;line-height:1.9}
+.quran{font-family:"Amiri Quran","Amiri",serif;line-height:2.25}
+.verse{font-family:"Amiri Quran","Amiri",serif;direction:rtl;text-align:right;font-size:calc(var(--fs) * 1.15);line-height:2.1;margin:0 0 12px;padding:4px 14px;border-right:3px solid var(--gold);color:var(--ink)}
+.book.sized .verse{font-size:calc(var(--fsb) * 1.08)}
+.bism{text-align:center!important;color:var(--gold);margin:8px 0 0}
+.stats{font-size:.85rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.fallback{font-size:.72rem;color:var(--lapis);margin:0 0 6px;font-family:var(--f-ui)}
+.empty{color:var(--muted);font-style:italic}
+.pager{display:flex;justify-content:space-between;gap:10px;max-width:760px;margin:10px auto 50px;flex-wrap:wrap}
+
+/* book (page-turn) mode */
+.bookstage{display:flex;flex-direction:column;align-items:center;padding-block:16px 10px;gap:10px}
+.book{position:relative;width:min(100%,1000px);height:var(--bh,70vh);display:grid;grid-template-columns:1fr;perspective:2200px;touch-action:pan-y}
+.book.spread{grid-template-columns:1fr 1fr}
+.book.sized{max-width:none;flex:0 0 auto}
+.book.sized .pg{padding:var(--pt) var(--px) var(--pb)}
+.book.sized .tr{font-size:var(--fsb)}
+.book.sized .ar{font-size:calc(var(--fsb) * 1.18)}
+.book.sized .hn .num{font-size:calc(var(--fsb) * .85)}
+.book.sized .chap-head h2{font-size:calc(var(--fsb) * 1.45)}
+.book.sized .folio{bottom:calc(var(--pb) * .35)}
+body.focus{background:var(--bg2)}
+body.focus .setpanel{position:fixed;z-index:40;left:50%;transform:translateX(-50%);bottom:calc(60px + env(safe-area-inset-bottom,0px));background:var(--paper);border:1px solid var(--line);border-radius:14px;box-shadow:0 10px 30px var(--shadow);padding:12px 14px;width:max-content;max-width:calc(100% - 24px);justify-content:center}
+body.focus .bnav{gap:8px;flex-wrap:wrap;justify-content:center}
+.pg{background:var(--paper);border:1px solid var(--line);position:relative;overflow:auto;padding:34px 40px 44px;box-shadow:0 10px 26px var(--shadow)}
+.book.spread .pg.l{border-radius:8px 0 0 8px;box-shadow:inset -18px 0 24px -18px var(--shadow),0 10px 26px var(--shadow)}
+.book.spread .pg.r{border-radius:0 8px 8px 0;border-left:0;box-shadow:inset 18px 0 24px -18px var(--shadow),0 10px 26px var(--shadow)}
+.book:not(.spread) .pg{border-radius:4px 8px 8px 4px;box-shadow:inset 14px 0 18px -14px var(--shadow),0 10px 26px var(--shadow)}
+.pg .hn:not(:first-child){border-top:1px dashed var(--line);padding-top:14px;margin-top:16px}
+.pg .ar{margin-bottom:8px}
+.pg .tr{margin-bottom:6px}
+.pg .folio{position:absolute;bottom:10px;left:0;right:0;text-align:center;font-size:.74rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.pg .chap-head{padding-block:4px 14px;gap:4px}
+.pg .chap-head h2{font-size:1.35rem}
+.pg .chap-head .k{font-size:.66rem}
+.leaf{position:absolute;top:0;bottom:0;transform-style:preserve-3d;z-index:5;pointer-events:none}
+.leaf .face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden}
+.leaf .face.back{transform:rotateY(180deg)}
+.bnav{display:flex;align-items:center;gap:14px;font-size:.85rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.measure{position:absolute;visibility:hidden;left:-9999px;top:0}
+.loading{padding:60px 0;text-align:center;color:var(--muted)}
+.toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:8px 14px;border-radius:999px;font-size:.84rem;z-index:50}
+@media (max-width:560px){.pg{padding:20px 18px 36px}.h{padding:16px}.hide-s{display:none}}
+@media (prefers-reduced-motion:reduce){.spine{transition:none}}
+</style>
+
+</head>
+<body>
+<div id="app"></div>
+<div id="toast" class="toast" hidden></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <pattern id="girih" width="60" height="60" patternUnits="userSpaceOnUse">
+      <g fill="none" stroke="#EBD9A6" stroke-width="1.2">
+        <polygon points="30,4 37,19 53,15 45,30 53,45 37,41 30,56 23,41 7,45 15,30 7,15 23,19"/>
+        <rect x="18" y="18" width="24" height="24" transform="rotate(45 30 30)"/>
+        <circle cx="30" cy="30" r="5"/>
+      </g>
+    </pattern>
+  </defs>
+</svg>
+
+<script>
+(function(){
+"use strict";
+/* ---------- i18n ---------- */
+const UI={
+ id:{tag:"Perpustakaan ilmu Islam gratis",h1:"Ilmu itu cahaya, dan cahaya tak pantas dijual",lead:"Seperti Baitul Hikmah di Baghdad, terbuka untuk siapa saja: Al-Qur'an, tafsir, dan kitab-kitab hadits dalam teks Arab dengan terjemah Indonesia, Inggris, dan Jepang. Gratis, tanpa daftar, tanpa iklan.",quranCat:"Al-Qur'an & Tafsir",adabCat:"Adab, Akhlak & Arba'in",sirahCat:"Sirah & Syamail",ayah:"ayat",surah:"Surah",part:"Bagian",lm:"Terjemah bahasa ini belum tersedia untuk kitab ini. Ditampilkan: ",lnen:"bahasa Inggris",lnid:"bahasa Indonesia",lnar:"teks Arab",books:"kitab",texts:"teks",partial:"Sumber terbuka baru memuat sebagian kitab ini (4.305 hadits pilihan dari sekitar 27.000).",
+  sittah:"Kutubus Sittah",other:"Kitab Hadits Lainnya",soon:"Segera Hadir",soonTag:"segera",pdf:"Edisi PDF Bahasa Indonesia (Internet Archive)",focus:"Mode fokus",pages:"Halaman",auto:"Otomatis",single:"1 halaman",double:"2 halaman",fitBook:"Proporsi buku",fitFill:"Penuh layar",settings:"Pengaturan",mark:"Pasang pembatas",unmark:"Lepas pembatas",toMark:"Ke pembatas",marks:"Pembatas buku",markSet:"Pembatas dipasang di hadits",markOff:"Pembatas dilepas",exitFocus:"Keluar mode fokus",vol:"Jilid",item:"Semua file",pdfNote:"Tautan ke file luar di Internet Archive. Penerjemah dan penerbit tidak dicantumkan di sana; hak cipta tetap milik penerbit aslinya.",resume:"Lanjutkan membaca",open:"Buka rak",
+  back:"Kembali ke rak",start:"Mulai membaca",hadith:"hadits",chapters:"kitab/bab",author:"Penyusun",died:"wafat",ah:"H",filter:"Cari bab…",
+  scroll:"Gulir",book:"Buku",arabic:"Teks Arab",prev:"Sebelumnya",next:"Berikutnya",prevCh:"Bab sebelumnya",nextCh:"Bab berikutnya",page:"Hal.",of:"dari",
+  loading:"Memuat kitab…",notr:"Terjemah Indonesia belum tersedia untuk hadits ini. Ditampilkan bahasa Inggris.",noja:"Terjemah Jepang sedang disiapkan. Ditampilkan bahasa Inggris.",
+  emptyTx:"(Teks tidak tersedia pada sumber ini)",chapter:"Kitab",goto:"Ke hadits no.",size:"Ukuran huruf",
+  note:"Sumber teks terbuka: quran-api & Hadith API (fawazahmed0), tafsir_api (spa5k), hadith-json (AhmedBaset), hadith-api (gadingnst). Teks Arab kitab klasik adalah warisan bersama; sebagian terjemah tetap milik penerjemahnya dan dipakai untuk tujuan non-komersial. Terjemah Al-Qur'an: Indonesia (Kemenag RI), Inggris (M. Pickthall), Jepang (Ryoichi Mita). Penomoran mengikuti sumber dan bisa berbeda dari edisi cetak. Tanda ◌ menandai satu huruf yang rusak pada data sumber.",err:"Gagal memuat data. Coba muat ulang halaman."},
+ en:{tag:"A free library of Islamic learning",h1:"Knowledge is light, and light should be free",lead:"Open to everyone, in the spirit of Baghdad's House of Wisdom: the Qur'an, tafsir and the great hadith collections in Arabic with Indonesian, English and Japanese translations. Free, no sign-up, no ads.",quranCat:"Qur'an & Tafsir",adabCat:"Manners, Character & Forty Hadith",sirahCat:"Sirah & Shama'il",ayah:"verses",surah:"Surah",part:"Part",lm:"This book is not yet available in this language. Showing: ",lnen:"English",lnid:"Indonesian",lnar:"Arabic text",books:"books",texts:"texts",partial:"The open source currently covers only part of this book (4,305 selected hadith of about 27,000).",
+  sittah:"Kutub al-Sittah · The Six Books",other:"More Hadith Collections",soon:"Coming Soon",soonTag:"soon",pdf:"Indonesian PDF edition (Internet Archive)",focus:"Focus mode",pages:"Pages",auto:"Auto",single:"Single page",double:"Two pages",fitBook:"Book shape",fitFill:"Fill screen",settings:"Settings",mark:"Place bookmark",unmark:"Remove bookmark",toMark:"Go to bookmark",marks:"Bookmarks",markSet:"Bookmark placed at hadith",markOff:"Bookmark removed",exitFocus:"Exit focus mode",vol:"Vol.",item:"All files",pdfNote:"Links to external files on the Internet Archive. Translator and publisher are not stated there; copyright stays with the original publisher.",resume:"Continue reading",open:"Open",
+  back:"Back to shelves",start:"Start reading",hadith:"hadith",chapters:"books",author:"Compiler",died:"d.",ah:"AH",filter:"Filter chapters…",
+  scroll:"Scroll",book:"Book",arabic:"Arabic text",prev:"Previous",next:"Next",prevCh:"Previous book",nextCh:"Next book",page:"Page",of:"of",
+  loading:"Loading book…",notr:"No Indonesian translation for this hadith.",noja:"Japanese translation is in preparation. Showing English.",
+  emptyTx:"(Text not available in this source)",chapter:"Book",goto:"Go to hadith #",size:"Text size",
+  note:"Open text sources: quran-api & Hadith API (fawazahmed0), tafsir_api (spa5k), hadith-json (AhmedBaset), hadith-api (gadingnst). The classical Arabic texts are a shared heritage; some translations remain the property of their translators and are used here non-commercially. Qur'an translations: Indonesian (Ministry of Religious Affairs, Indonesia), English (M. Pickthall), Japanese (Ryoichi Mita). Numbering follows the sources and may differ from print editions. The mark ◌ flags a letter damaged in the source data.",err:"Could not load the data. Please reload the page."},
+ ar:{tag:"مكتبة علمية إسلامية مجانية",h1:"العلم نور، والنور لا يُباع",lead:"على خطى بيت الحكمة في بغداد: القرآن الكريم والتفاسير وأمهات كتب الحديث، مجانًا للجميع.",quranCat:"القرآن وعلومه",adabCat:"الآداب والأخلاق والأربعينيات",sirahCat:"السيرة والشمائل",ayah:"آية",surah:"سورة",part:"جزء",lm:"",lnen:"",lnid:"",lnar:"",books:"كتابًا",texts:"نصًّا",partial:"المصدر المفتوح يتضمن جزءًا من الكتاب فقط.",
+  sittah:"الكتب الستة",other:"كتب حديث أخرى",soon:"قريبًا",soonTag:"قريبًا",pdf:"نسخة PDF بالإندونيسية (أرشيف الإنترنت)",vol:"المجلد",focus:"وضع التركيز",pages:"الصفحات",auto:"تلقائي",single:"صفحة واحدة",double:"صفحتان",fitBook:"شكل الكتاب",fitFill:"ملء الشاشة",settings:"الإعدادات",mark:"ضع علامة",unmark:"أزل العلامة",toMark:"إلى العلامة",marks:"العلامات",markSet:"وُضعت العلامة عند الحديث",markOff:"أُزيلت العلامة",exitFocus:"الخروج من وضع التركيز",item:"كل الملفات",pdfNote:"روابط لملفات خارجية على أرشيف الإنترنت.",resume:"متابعة القراءة",open:"افتح",
+  back:"العودة إلى الرفوف",start:"ابدأ القراءة",hadith:"حديث",chapters:"كتاب",author:"المصنف",died:"ت",ah:"هـ",filter:"ابحث في الكتب…",
+  scroll:"تمرير",book:"كتاب",arabic:"النص العربي",prev:"السابق",next:"التالي",prevCh:"الكتاب السابق",nextCh:"الكتاب التالي",page:"صفحة",of:"من",
+  loading:"جارٍ التحميل…",notr:"",noja:"",emptyTx:"(النص غير متوفر في هذا المصدر)",chapter:"كتاب",goto:"إلى الحديث رقم",size:"حجم الخط",
+  note:"مصدر النصوص: مجموعة Hadith API المفتوحة (ملكية عامة). سيضاف مسند الإمام أحمد ورياض الصالحين وغيرها تباعًا.",err:"تعذر تحميل البيانات."},
+ ja:{quranCat:"クルアーンと注釈",adabCat:"礼儀・品性・40ハディース",sirahCat:"預言者伝",ayah:"節",surah:"スーラ",part:"部",lm:"この本はまだ日本語訳がありません。表示中：",lnen:"英語",lnid:"インドネシア語",lnar:"アラビア語原文",books:"冊",texts:"項目",partial:"公開データにはこの本の一部のみが含まれています。",tag:"無料のイスラーム学術図書館",h1:"知識は光、光は誰にでも開かれるべきもの",lead:"かつてのバグダードの「知恵の館」のように、誰にでも開かれた図書館。クルアーン、タフスィール、主要なハディース集をアラビア語原文と日本語・インドネシア語・英語訳で。無料・登録不要・広告なし。",
+  sittah:"六書（クトゥブ・スィッタ）",other:"その他のハディース集",soon:"近日公開",soonTag:"近日",pdf:"インドネシア語PDF版（Internet Archive）",vol:"第",focus:"集中モード",pages:"ページ",auto:"自動",single:"1ページ",double:"見開き",fitBook:"本の比率",fitFill:"全画面",settings:"設定",mark:"しおりを挟む",unmark:"しおりを外す",toMark:"しおりへ",marks:"しおり",markSet:"しおりを挟みました：ハディース",markOff:"しおりを外しました",exitFocus:"集中モードを終了",item:"全ファイル",pdfNote:"Internet Archive上の外部ファイルへのリンクです。著作権は原出版社に帰属します。",resume:"続きを読む",open:"開く",
+  back:"本棚に戻る",start:"読み始める",hadith:"ハディース",chapters:"巻",author:"編者",died:"没",ah:"ヒジュラ暦",filter:"章を検索…",
+  scroll:"スクロール",book:"本",arabic:"アラビア語",prev:"前へ",next:"次へ",prevCh:"前の巻",nextCh:"次の巻",page:"ページ",of:"/",
+  loading:"読み込み中…",notr:"",noja:"日本語訳は準備中です。英語で表示しています。",emptyTx:"（この資料には本文がありません）",chapter:"巻",goto:"番号へ移動",size:"文字サイズ",
+  note:"本文の出典：オープンデータセット Hadith API（fawazahmed0、パブリックドメイン）。ムスナド・アフマドやリヤード・サーリヒーンなどは順次追加予定です。",err:"データを読み込めませんでした。"}
+};
+const LANGS=[["id","ID"],["en","EN"],["ar","عربي"],["ja","日本"]];
+const COLORS={quran:"#0E4A38",jalalayn:"#5A4A1E",mukhtasar:"#2A5A55",saadi:"#4A3550",ibnkatsir:"#26324F",ahmad:"#5C2A2A",darimi:"#3F4B2B",misykat:"#1E4459",riyadhus:"#2F5233",bulugh:"#5D3B1F",adab:"#4D3A5C",syamail:"#6A4A2A",bukhari:"#1F5A48",muslim:"#23436B",abudawud:"#6A2633",tirmidhi:"#3A305E",nasai:"#7E531C",ibnmajah:"#1C5460",malik:"#4D2A4E",nawawi:"#4A5426",qudsi:"#5B3A22"};
+const HEIGHT={quran:232,jalalayn:200,mukhtasar:196,saadi:212,ibnkatsir:226,ahmad:224,darimi:202,misykat:206,riyadhus:204,bulugh:198,adab:192,syamail:180,bukhari:220,muslim:214,abudawud:204,tirmidhi:198,nasai:208,ibnmajah:196,malik:190,nawawi:170,qudsi:166};
+const LOCAL={ // localized book titles
+ id:{quran:"Al-Qur'an al-Karim",jalalayn:"Tafsir al-Jalalain",mukhtasar:"Al-Mukhtashar fit Tafsir",saadi:"Tafsir as-Sa'di",ibnkatsir:"Tafsir Ibnu Katsir",ahmad:"Musnad Imam Ahmad",darimi:"Sunan ad-Darimi",misykat:"Misykatul Mashabih",riyadhus:"Riyadhus Shalihin",bulugh:"Bulughul Maram",adab:"Al-Adab al-Mufrad",syamail:"Asy-Syamail al-Muhammadiyah",bukhari:"Shahih al-Bukhari",muslim:"Shahih Muslim",abudawud:"Sunan Abu Dawud",tirmidhi:"Jami' at-Tirmidzi",nasai:"Sunan an-Nasa'i",ibnmajah:"Sunan Ibnu Majah",malik:"Al-Muwaththa' Imam Malik",nawawi:"Hadits Arba'in an-Nawawi",qudsi:"40 Hadits Qudsi"},
+ ja:{quran:"聖クルアーン",jalalayn:"ジャラーライン注釈",mukhtasar:"ムフタサル注釈",saadi:"サアディー注釈",ibnkatsir:"イブン・カスィール注釈",ahmad:"ムスナド・アフマド",darimi:"スナン・ダーリミー",misykat:"ミシュカート・アル＝マサービーフ",riyadhus:"リヤード・サーリヒーン",bulugh:"ブルーグ・アル＝マラーム",adab:"アダブ・アル＝ムフラド",syamail:"シャマーイル・ムハンマディーヤ",bukhari:"サヒーフ・ブハーリー",muslim:"サヒーフ・ムスリム",abudawud:"スナン・アブー・ダーウード",tirmidhi:"ジャーミウ・ティルミズィー",nasai:"スナン・ナサーイー",ibnmajah:"スナン・イブン・マージャ",malik:"ムワッタア（マーリク）",nawawi:"ナワウィー40ハディース",qudsi:"40のハディース・クドスィー"}
+};
+const SPINE_AR={quran:"القرآن الكريم",mukhtasar:"المختصر",jalalayn:"الجلالين",saadi:"السعدي",ibnkatsir:"ابن كثير",ahmad:"مسند أحمد",darimi:"الدارمي",misykat:"المشكاة",riyadhus:"رياض الصالحين",bulugh:"بلوغ المرام",adab:"الأدب المفرد",syamail:"الشمائل",bukhari:"البخاري",muslim:"مسلم",abudawud:"أبو داود",tirmidhi:"الترمذي",nasai:"النسائي",ibnmajah:"ابن ماجه",malik:"الموطأ",nawawi:"الأربعون",qudsi:"القدسية"};
+const SPINE={quran:"Al-Qur'an",jalalayn:"Jalalain",mukhtasar:"Mukhtashar",saadi:"as-Sa'di",ibnkatsir:"Ibnu Katsir",ahmad:"Ahmad",darimi:"ad-Darimi",misykat:"Misykat",riyadhus:"Riyadhus",bulugh:"Bulughul",adab:"al-Adab",syamail:"Syamail",bukhari:"al-Bukhari",muslim:"Muslim",abudawud:"Abu Dawud",tirmidhi:"Tirmidzi",nasai:"an-Nasa'i",ibnmajah:"Ibnu Majah",malik:"Muwaththa'",nawawi:"Arba'in",qudsi:"Qudsi"};
+const IA="https://archive.org/download/kitab-hadits-bahasa-indonesia-terjemahan/";
+const PDFS={bukhari:["shahih-bukhari",9],muslim:["shahih-muslim",4],nasai:["sunan-nasai",5],abudawud:["sunan-abi-dawud",5],tirmidhi:["sunan-tirmizi",5],ibnmajah:["sunan-ibn-majah",4]};
+const IA_ITEM="https://archive.org/details/KutubusSittah";
+function pdfBox(id){const p=PDFS[id];if(!p&&id!=="malik"&&id!=="ahmad")return "";
+  const vols=p?Array.from({length:p[1]},(_,i)=>`<a href="${IA}${p[0]}-bahasa-indonesia-vol-${i+1}.pdf" target="_blank" rel="noopener">${esc(t("vol"))} ${fmt(i+1)}</a>`).join(""):"";
+  return `<div class="pdfbox"><h3>${esc(t("pdf"))}</h3><div class="vols">${vols}<a href="${IA_ITEM}" target="_blank" rel="noopener">${esc(t("item"))} ↗</a></div><p>${esc(t("pdfNote"))}</p></div>`}
+const SOON=[["Shahih Ibnu Khuzaimah","صحيح ابن خزيمة","#4A2E36"],["Shahih Ibnu Hibban","صحيح ابن حبان","#2F3B58"],["Sirah Ibnu Hisyam","السيرة النبوية","#4B3F2A"],["Zadul Ma'ad","زاد المعاد","#2E4A3C"],["Tafsir ath-Thabari","تفسير الطبري","#3E4A55"],["Fathul Bari","فتح الباري","#4E4426"],["Ihya' Ulumiddin","إحياء علوم الدين","#3B2E4A"]];
+const CATS=[["quran","quranCat","القرآن وعلومه",["quran","mukhtasar","jalalayn","saadi","ibnkatsir"]],["sittah","sittah","الكتب الستة",["bukhari","muslim","abudawud","tirmidhi","nasai","ibnmajah"]],["hadith","other","كتب الحديث",["malik","ahmad","darimi","misykat"]],["adab","adabCat","الآداب والأخلاق",["riyadhus","bulugh","adab","nawawi","qudsi"]],["sirah","sirahCat","السيرة والشمائل",["syamail"]]];
+const LCODE={id:"ind",en:"eng",ja:"jpn",ar:"ara"};
+const secTitle=s=>S.lang==="ar"&&s.ta?s.ta:s.t;
+
+const RIB_O='<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h8v13l-4-3-4 3z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
+const RIB_F='<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h8v13l-4-3-4 3z" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
+/* ---------- state ---------- */
+const store={get(k,d){try{const v=localStorage.getItem("mk:"+k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem("mk:"+k,JSON.stringify(v))}catch(e){}}};
+const S={lang:store.get("lang","id"),mode:store.get("mode","book"),showAr:store.get("showAr",true),fs:store.get("fs",1.06),layout:store.get("layout","auto"),fit:store.get("fit","book"),index:null,chunks:{},view:null};
+const app=document.getElementById("app");
+const getMarks=()=>store.get("marks",{});
+function setMark(bid,v){const m=getMarks();if(v)m[bid]=v;else delete m[bid];store.set("marks",m)}
+const atLink=(bid,s,n)=>`#read-${bid}-${String(s).replace(".","_")}-at-${String(n).replace(".","_")}`;
+const t=k=>(UI[S.lang]&&UI[S.lang][k])||UI.en[k]||"";
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const bookTitle=b=>S.lang==="ar"?b.ar:((LOCAL[S.lang]||{})[b.id]||b.en);
+const fmt=n=>{try{return n.toLocaleString(S.lang==="ar"?"ar-EG":S.lang)}catch(e){return String(n)}};
+function toast(m){const el=document.getElementById("toast");el.textContent=m;el.hidden=false;clearTimeout(toast._t);toast._t=setTimeout(()=>el.hidden=true,2200)}
+document.documentElement.style.setProperty("--fs",S.fs+"rem");
+
+async function loadIndex(){if(!S.index){const r=await fetch("d/index.json");if(!r.ok)throw new Error(r.status);S.index=await r.json()}return S.index}
+async function loadChunk(bid,ci){const k=bid+"-"+ci;if(!S.chunks[k]){S.chunks[k]=fetch("d/"+k+".json").then(r=>{if(!r.ok)throw new Error(r.status);return r.json()})}return S.chunks[k]}
+const findBook=id=>S.index.find(b=>b.id===id);
+
+/* ---------- routing ---------- */
+const enc=k=>String(k).replace(".","_"), dec=k=>String(k).replace("_",".");
+function route(){
+  const h=location.hash.slice(1);
+  let m;
+  if((m=h.match(/^read-([a-z]+)-([0-9_]+)(?:-at-([0-9_]+))?$/)))return {v:"read",b:m[1],s:dec(m[2]),n:m[3]?parseFloat(dec(m[3])):null};
+  if((m=h.match(/^kitab-([a-z]+)$/)))return {v:"book",b:m[1]};
+  return {v:"lib"};
+}
+function go(hash){if(location.hash==="#"+hash)render();else location.hash=hash}
+window.addEventListener("hashchange",render);
+
+/* ---------- shared header ---------- */
+function langSeg(){return `<div class="seg" role="group" aria-label="Language">${LANGS.map(([k,l])=>`<button data-lang="${k}" class="${k==="ar"?"ar":""}" aria-pressed="${S.lang===k}">${l}</button>`).join("")}</div>`}
+function bindLang(root,after){root.querySelectorAll("[data-lang]").forEach(b=>b.onclick=()=>{S.lang=b.dataset.lang;store.set("lang",S.lang);after()})}
+function setLangClass(){document.documentElement.lang=S.lang==="id"?"id":S.lang;document.body.classList.toggle("lang-ja",S.lang==="ja")}
+
+/* ---------- library ---------- */
+function spineHTML(b){
+  return `<button class="spine" style="--c:${COLORS[b.id]};--h:${HEIGHT[b.id]}px;--w:${b.total>3000?62:b.total>1000?56:50}px" data-book="${b.id}" title="${esc(bookTitle(b))}">
+    ${getMarks()[b.id]?'<span class="rb"></span>':""}<span class="t">${esc(SPINE[b.id]||b.en)}</span><span class="a">${esc(SPINE_AR[b.id]||b.ar)}</span></button>`;
+}
+function marksHTML(){const m=getMarks();const ks=Object.keys(m).filter(findBook).sort((a,b)=>m[b].ts-m[a].ts);if(!ks.length)return "";
+  return `<div class="marks"><span class="lbl">${RIB_F} ${esc(t("marks"))}</span>${ks.map(k=>`<a class="chip" href="${atLink(k,m[k].s,m[k].n)}">${esc(bookTitle(findBook(k)))} · ${fmt(m[k].n)}</a>`).join("")}</div>`}
+function renderLib(){
+  const idx=S.index, last=store.get("last",null);
+  const six=["bukhari","muslim","abudawud","tirmidhi","nasai","ibnmajah"];
+  const lastB=last&&findBook(last.b);
+  app.innerHTML=`
+  <header class="top"><div class="wrap"><a class="brand" href="#"><b>Maktabah Ilmu</b><span>مكتبة العلم</span></a>${langSeg()}</div></header>
+  <main class="wrap">
+    <section class="hero">
+      <div class="ayah">وَقُل رَّبِّ زِدْنِي عِلْمًا</div>
+      <h1>${esc(t("h1"))}</h1>
+      <p>${esc(t("lead"))}</p>
+      <div class="stats">${fmt(idx.length)} ${esc(t("books"))} · ${fmt(idx.reduce((a,b)=>a+b.total,0))} ${esc(t("texts"))}</div>
+      ${lastB?`<div class="resume"><a class="btn" href="${atLink(lastB.id,last.s,last.n)}">${esc(t("resume"))}: ${esc(bookTitle(lastB))} · ${esc(t("hadith"))} ${fmt(last.n)}</a></div>`:""}
+      ${marksHTML()}
+    </section>
+    <div class="case">
+      ${CATS.map(([k,l,ar,ids])=>{const bs=ids.map(findBook).filter(Boolean);return bs.length?`<div class="shelf"><h2>${esc(t(l))} <small>${ar}</small></h2><div class="row">${bs.map(spineHTML).join("")}</div></div>`:""}).join("")}
+      <div class="shelf"><h2>${esc(t("soon"))}</h2><div class="row">${SOON.map(([n,a,c,u],i)=>u?`<a class="spine" href="${u}" target="_blank" rel="noopener" style="--c:${c};--h:${200-i*6}px;--w:50px" title="${esc(n)} · PDF"><span class="t">${esc(n.replace(/^(Shahih|Musnad Imam|Al-Adab) /,""))}</span><span class="a">${a}</span><span class="tag">PDF ↗</span></a>`:`<div class="spine soon" style="--c:${c};--h:${200-i*6}px;--w:50px" aria-label="${esc(n)} (${esc(t("soonTag"))})"><span class="t">${esc(n.replace(/^(Shahih|Musnad Imam|Al-Adab) /,""))}</span><span class="a">${a}</span><span class="tag">${esc(t("soonTag"))}</span></div>`).join("")}</div></div>
+    </div>
+    <p class="note">${esc(t("note"))}</p>
+  </main>`;
+  app.querySelectorAll("[data-book]").forEach(b=>b.onclick=()=>go("kitab-"+b.dataset.book));
+  bindLang(app,render);
+}
+
+/* ---------- book detail ---------- */
+function renderBook(id){
+  const b=findBook(id); if(!b)return go("");
+  const last=store.get("last",null);
+  const cont=last&&last.b===id?last:null;
+  app.innerHTML=`
+  <header class="top"><div class="wrap"><a class="brand" href="#"><b>Maktabah Ilmu</b><span>مكتبة العلم</span></a>${langSeg()}</div></header>
+  <main class="wrap"><div class="detail">
+    <div class="cover" style="--c:${COLORS[id]}"><svg aria-hidden="true"><rect width="100%" height="100%" fill="url(#girih)"/></svg><div class="frame"></div>
+      <div class="ca">${esc(b.ar)}</div><div class="ce">${esc(b.en)}</div><div class="ce" style="font-size:.8rem;opacity:.8">${esc(b.auth)}</div></div>
+    <div class="meta">
+      <a class="btn ghost back" href="#">← ${esc(t("back"))}</a>
+      <div><div class="arname">${esc(b.ar)}</div><h1>${esc(bookTitle(b))}</h1></div>
+      <div class="facts"><span>${esc(t("author"))}: <b>${esc(S.lang==="ar"?b.authar:b.auth)}</b>${b.died?` (${esc(t("died"))} ${fmt(b.died)} ${esc(t("ah"))})`:""}</span>
+        <span><b>${fmt(b.total)}</b> ${esc(t(b.kind==="hadith"?"hadith":"ayah"))}</span><span><b>${fmt(b.secs.length)}</b> ${esc(t("chapters"))}</span></div>
+      <div class="resume"><a class="btn" href="${cont?atLink(id,cont.s,cont.n):"#read-"+id+"-"+enc(b.secs[0].k)}">${esc(cont?t("resume"):t("start"))}</a>${getMarks()[id]?`<a class="btn ghost" href="${atLink(id,getMarks()[id].s,getMarks()[id].n)}"><span style="color:#B33A3A;display:inline-flex">${RIB_F}</span> ${esc(t("toMark"))} · ${esc(t("hadith"))} ${fmt(getMarks()[id].n)}</a>`:""}</div>
+      ${b.secs.length>6?`<input class="filter" id="tocfilter" type="search" placeholder="${esc(t("filter"))}">`:""}
+      ${b.partial?`<p class="note" style="padding:0">${esc(t("partial"))}</p>`:""}
+      ${pdfBox(id)}
+      <nav class="toc" id="toc">${b.secs.map((s,i)=>`<button data-s="${enc(s.k)}" data-name="${esc((s.t+" "+(s.ta||"")).toLowerCase())}"><span class="no">${s.k==="0"&&s.f>1?"+":i+(b.secs[0].k==="0"&&b.secs[0].f<=1?0:1)}</span><span class="nm">${esc(secTitle(s))}${b.kind!=="hadith"&&s.ta&&S.lang!=="ar"?` <span style="font-family:var(--f-ar);color:var(--gold)">${esc(s.ta)}</span>`:""}</span><span class="ct">${fmt(s.c)} · ${fmt(s.f)}–${fmt(s.l)}</span></button>`).join("")}</nav>
+    </div></div></main>`;
+  app.querySelectorAll("#toc button").forEach(x=>x.onclick=()=>go(`read-${id}-${x.dataset.s}`));
+  const f=document.getElementById("tocfilter");
+  if(f)f.oninput=()=>{const q=f.value.trim().toLowerCase();app.querySelectorAll("#toc button").forEach(x=>x.hidden=q&&!x.dataset.name.includes(q))};
+  bindLang(app,render);
+}
+
+/* ---------- hadith rendering ---------- */
+function pickTr(r){
+  const col={id:3,en:2,ja:5}, order=S.lang==="id"?["id","en"]:S.lang==="ja"?["ja","en","id"]:["en","id"];
+  for(const l of order){const v=r[col[l]];if(v)return {tx:v,lang:l}}
+  return {tx:"",lang:""};
+}
+function hadithParts(r,b){
+  const [n,ar,en,ind,g,ja,verse,nEnd]=r;
+  const kind=b.kind||"hadith";
+  const parts=[];
+  if(kind==="tafsir"&&verse)parts.push({cls:"verse",lang:"ar",text:verse});
+  const tr=S.lang==="ar"?{tx:""}:pickTr(r);
+  const showAr=S.lang==="ar"||!tr.tx||(kind!=="tafsir"&&S.showAr);
+  if(showAr&&ar)parts.push({cls:kind==="quran"?"ar quran":"ar",lang:"ar",text:ar});
+  if(tr.tx)parts.push({cls:"tr",lang:tr.lang,text:tr.tx});
+  if(!parts.length)parts.push({cls:"tr empty",lang:"",text:t("emptyTx"),fixed:true});
+  const label=kind==="hadith"?fmt(n):`${S.curSec}:${fmt(n)}${nEnd?"–"+fmt(nEnd):""}`;
+  const hn=`<div class="hn" data-n="${n}"><span class="num">${label}</span>${g?`<span class="grade" title="${esc(g)}">${esc(g.split("; ")[0])}</span>`:""}</div>`;
+  return {n,hn,parts};
+}
+const pHTML=(pt,txt,cont)=>`<p class="${pt.cls}${cont?" cont":""}"${pt.lang?` lang="${pt.lang}"`:""}>${esc(txt)}</p>`;
+function hadithHTML(r,b){const h=hadithParts(r,b);return `<article class="h" data-n="${h.n}">${h.hn}${h.parts.map(pt=>pHTML(pt,pt.text)).join("")}</article>`}
+
+/* ---------- reader ---------- */
+async function renderRead(bid,sk,anchorN){
+  const b=findBook(bid); if(!b)return go("");
+  const si=b.secs.findIndex(s=>s.k===String(sk)); if(si<0)return go("kitab-"+bid);
+  const sec=b.secs[si];
+  const keepAnchor=anchorN!=null;
+  app.innerHTML=`
+  <header class="top rbar"><div class="wrap">
+    <a class="iconbtn" href="#kitab-${bid}" aria-label="${esc(t("back"))}">←</a>
+    <div class="ttl"><select id="secsel" aria-label="${esc(t("chapter"))}">${b.secs.map(s=>`<option value="${enc(s.k)}"${s.k===sec.k?" selected":""}>${esc(bookTitle(b))} · ${esc(secTitle(s))}</option>`).join("")}</select></div>
+    <button class="iconbtn" id="setbtn" aria-expanded="${!!S.panel}" aria-controls="setpanel" title="${esc(t("size"))}">Aa</button>
+    <button class="iconbtn markbtn" aria-label="${esc(t("mark"))}" title="${esc(t("mark"))}">${RIB_O}</button>
+    <button class="iconbtn" id="focusbtn" title="${esc(t("focus"))}" aria-label="${esc(t("focus"))}">⛶</button>
+  </div></header>
+  <div class="setpanel wrap" id="setpanel"${S.panel?"":" hidden"}>
+      <div class="seg" role="group" aria-label="Mode"><button data-mode="scroll" aria-pressed="${S.mode==="scroll"}">${esc(t("scroll"))}</button><button data-mode="book" aria-pressed="${S.mode==="book"}">${esc(t("book"))}</button></div>
+      ${langSeg()}
+      ${S.lang!=="ar"?`<label class="chk"><input type="checkbox" id="showar"${S.showAr?" checked":""}>${esc(t("arabic"))}</label>`:""}
+      <div class="seg" aria-label="${esc(t("size"))}"><button id="fsm" aria-label="smaller">A−</button><button id="fsp" aria-label="larger">A+</button></div>
+      ${S.mode==="book"?`<div class="seg" role="group" aria-label="${esc(t("pages"))}">${["auto","single","double"].map(k=>`<button data-layout="${k}" aria-pressed="${S.layout===k}">${esc(t(k))}</button>`).join("")}</div>
+      <div class="seg" role="group">${[["book","fitBook"],["fill","fitFill"]].map(([k,l])=>`<button data-fit="${k}" aria-pressed="${S.fit===k}">${esc(t(l))}</button>`).join("")}</div>`:""}
+  </div>
+  ${S.focus&&S.mode!=="book"?`<div class="fexit"><button class="iconbtn markbtn" aria-label="${esc(t("mark"))}">${RIB_O}</button><button class="iconbtn" id="focusexit" aria-label="${esc(t("exitFocus"))}" title="${esc(t("exitFocus"))}">✕</button></div>`:""}
+  <main id="rmain"><div class="loading">${esc(t("loading"))}</div></main>`;
+  document.body.classList.toggle("focus",!!S.focus);
+  app.querySelectorAll("[data-layout]").forEach(x=>x.onclick=()=>{S.layout=x.dataset.layout;store.set("layout",S.layout);rerender()});
+  app.querySelectorAll("[data-fit]").forEach(x=>x.onclick=()=>{S.fit=x.dataset.fit;store.set("fit",S.fit);rerender()});
+  const togglePanel=()=>{S.panel=!S.panel;const p=document.getElementById("setpanel");p.hidden=!S.panel;document.getElementById("setbtn").setAttribute("aria-expanded",S.panel);if(S.mode==="book"&&!S.focus)rerender()};
+  document.getElementById("setbtn").onclick=togglePanel;
+  const setFocus=on=>{S.focus=on;
+    try{if(on&&document.documentElement.requestFullscreen&&!document.fullscreenElement){S.fsOn=true;document.documentElement.requestFullscreen().catch(()=>{S.fsOn=false})}
+        if(!on&&document.fullscreenElement&&document.exitFullscreen){document.exitFullscreen().catch(()=>{})}}catch(e){}
+    rerender()};
+  document.getElementById("focusbtn").onclick=()=>setFocus(true);
+  const fx=document.getElementById("focusexit");if(fx)fx.onclick=()=>setFocus(false);
+  document.onfullscreenchange=()=>{if(!document.fullscreenElement&&S.fsOn){S.fsOn=false;if(S.focus){S.focus=false;rerender()}}};
+  window.__setFocus=setFocus;
+  document.getElementById("secsel").onchange=e=>go(`read-${bid}-${e.target.value}`);
+  const rerender=()=>{const a=currentAnchor();renderRead(bid,sec.k,a)};
+  app.querySelectorAll("[data-mode]").forEach(x=>x.onclick=()=>{S.mode=x.dataset.mode;store.set("mode",S.mode);rerender()});
+  bindLang(app,()=>{setLangClass();rerender()});
+  const sa=document.getElementById("showar"); if(sa)sa.onchange=()=>{S.showAr=sa.checked;store.set("showAr",S.showAr);rerender()};
+  document.getElementById("fsm").onclick=()=>{S.fs=Math.max(.85,+(S.fs-.08).toFixed(2));store.set("fs",S.fs);document.documentElement.style.setProperty("--fs",S.fs+"rem");rerender()};
+  document.getElementById("fsp").onclick=()=>{S.fs=Math.min(1.6,+(S.fs+.08).toFixed(2));store.set("fs",S.fs);document.documentElement.style.setProperty("--fs",S.fs+"rem");rerender()};
+
+  let rows;
+  try{const ch=await loadChunk(bid,sec.ch);rows=ch[sec.k]||[]}catch(e){document.getElementById("rmain").innerHTML=`<div class="loading">${esc(t("err"))}</div>`;return}
+  if(route().v!=="read")return;
+  const main=document.getElementById("rmain");
+  S.curSec=sec.k;
+  const kind=b.kind||"hadith";
+  const lc=LCODE[S.lang];
+  const missing=S.lang!=="ar"&&!b.langs.includes(lc);
+  const shown=b.langs.includes("eng")?t("lnen"):b.langs.includes("ind")?t("lnid"):t("lnar");
+  const head=`<div class="chap-head"><div class="k">${esc(t(kind==="hadith"?(/^(ahmad|darimi)$/.test(bid)?"part":"chapter"):"surah"))} ${esc(sec.k==="0"&&sec.f>1?"+":sec.k)}</div>${kind!=="hadith"&&sec.ta?`<div class="ar quran" style="text-align:center;margin:0">${esc(sec.ta)}</div>`:""}<h2>${esc(secTitle(sec))}</h2><p>${fmt(sec.c)} ${esc(t(kind==="hadith"?"hadith":"ayah"))} · ${fmt(sec.f)}–${fmt(sec.l)}</p>${missing&&t("lm")?`<p class="fallback">${esc(t("lm")+shown)}</p>`:""}${kind==="quran"&&sec.k!=="1"&&sec.k!=="9"?`<p class="ar quran bism">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</p>`:""}</div>`;
+  const prevS=b.secs[si-1], nextS=b.secs[si+1];
+  const pagerHTML=`<nav class="pager wrap">${prevS?`<a class="btn ghost" href="#read-${bid}-${enc(prevS.k)}">← ${esc(t("prevCh"))}</a>`:"<span></span>"}${nextS?`<a class="btn ghost" href="#read-${bid}-${enc(nextS.k)}">${esc(t("nextCh"))} →</a>`:""}</nav>`;
+  const saveLast=n=>{store.set("last",{b:bid,s:sec.k,n});const pos=store.get("pos",{});pos[bid]={s:sec.k,n};store.set("pos",pos)};
+  const markHere=()=>{const m=getMarks()[bid];if(!m||m.s!==sec.k)return false;
+    if(S.view&&S.view.type==="book")return S.view.ns.includes(m.n);
+    const el=document.querySelector(`.scroll .h[data-n="${m.n}"]`);if(!el)return false;const r=el.getBoundingClientRect();return r.bottom>60&&r.top<innerHeight};
+  const syncMark=()=>{const on=markHere();document.querySelectorAll(".markbtn").forEach(x=>{x.classList.toggle("on",on);x.innerHTML=on?RIB_F:RIB_O;x.title=x.ariaLabel=on?t("unmark"):t("mark")});
+    const m=getMarks()[bid];const tm=document.getElementById("tomark");
+    if(tm){tm.hidden=!m||on;if(m)tm.href=atLink(bid,m.s,m.n),tm.innerHTML=`<span style="color:#B33A3A;display:inline-flex">${RIB_F}</span> ${esc(t("toMark"))} · ${fmt(m.n)}`}
+    document.querySelectorAll(".h.marked").forEach(e=>e.classList.remove("marked"));if(m&&m.s===sec.k){const e=document.querySelector(`.scroll .h[data-n="${m.n}"]`);if(e)e.classList.add("marked")}};
+  const toggleMark=()=>{if(markHere()){setMark(bid,null);toast(t("markOff"))}else{const n=S.view&&S.view.type==="book"?S.view.first:currentAnchor();if(n==null)return;setMark(bid,{s:sec.k,n,ts:Date.now()});toast(`${t("markSet")} ${fmt(n)}`)}
+    syncMark();if(S.view&&S.view.type==="book"&&S.view.redraw)S.view.redraw()};
+  document.querySelectorAll(".markbtn").forEach(x=>x.onclick=toggleMark);
+
+  if(S.mode==="scroll"){
+    main.innerHTML=`<div class="wrap"><div class="scroll"><div style="text-align:center;padding-top:12px"><a class="chip tomark" id="tomark" hidden></a></div>${head}${rows.map(r=>hadithHTML(r,b)).join("")}</div></div>${pagerHTML}`;
+    S.view={type:"scroll"};
+    if(keepAnchor){const el=main.querySelector(`.h[data-n="${anchorN}"]`);if(el)el.scrollIntoView({block:"start"});window.scrollBy(0,-70)}else window.scrollTo(0,0);
+    saveLast(keepAnchor?anchorN:rows[0]&&rows[0][0]);syncMark();
+    let tm;window.onscroll=()=>{clearTimeout(tm);tm=setTimeout(()=>{const a=currentAnchor();if(a!=null)saveLast(a);syncMark()},300)};
+    return;
+  }
+  window.onscroll=null;
+  /* book mode */
+  const topH=S.focus?0:document.querySelector(".top").getBoundingClientRect().height+(S.panel?document.getElementById("setpanel").getBoundingClientRect().height:0);
+  const availW=window.innerWidth-(S.focus?12:Math.max(32,window.innerWidth*.04));
+  const availH=Math.max(320,window.innerHeight-topH-(S.focus?56:76));
+  const RATIO=0.68; // page width / height, like a printed book
+  const spread=S.layout==="double"?true:S.layout==="single"?false:(availW/availH>1.05&&availW>=640);
+  const cols=spread?2:1;
+  let pw,bh;
+  if(S.fit==="book"){bh=Math.min(availH,(availW/cols)/RATIO);pw=Math.min(availW/cols,bh*RATIO)}else{bh=availH;pw=availW/cols}
+  pw=Math.floor(pw);bh=Math.floor(bh);
+  // type proportional to the page: about 45-50 characters per line, user A-/A+ scales it
+  const padX=Math.round(pw*(spread||pw<600?0.085:0.07)), padT=Math.round(bh*0.06), padB=Math.round(bh*0.075)+10;
+  const fsb=Math.max(14,Math.min(30,(pw-padX*2)/23*(S.fs/1.06)));
+  const bookStyle=`--bh:${bh}px;width:${pw*cols}px;--px:${padX}px;--pt:${padT}px;--pb:${padB}px;--fsb:${fsb.toFixed(2)}px`;
+  main.innerHTML=`<div class="bookstage"><div class="book${spread?" spread":""} sized" id="book" style="${bookStyle}"></div>
+    <div class="bnav"><button class="iconbtn" id="pprev" aria-label="${esc(t("prev"))}">‹</button><span id="pinfo"></span><button class="iconbtn" id="pnext" aria-label="${esc(t("next"))}">›</button><a class="chip tomark" id="tomark" hidden></a>${S.focus?`<button class="iconbtn" id="fset" aria-label="${esc(t("settings"))}">Aa</button><button class="iconbtn markbtn" aria-label="${esc(t("mark"))}">${RIB_O}</button><button class="iconbtn" id="focusexit2" aria-label="${esc(t("exitFocus"))}">✕</button>`:""}</div></div>${pagerHTML}`;
+  if(S.focus){document.getElementById("fset").onclick=togglePanel;document.getElementById("focusexit2").onclick=()=>window.__setFocus(false);document.querySelectorAll(".bnav .markbtn").forEach(x=>x.onclick=()=>toggleMark())}
+  const book=document.getElementById("book");
+  // paginate
+  const pageW=pw;
+  const meas=document.createElement("div");meas.className="pg measure";meas.style.width=pageW+"px";meas.style.height="auto";book.appendChild(meas);
+  const pages=[];let cur=[],curN=[];
+  const limit=bh-4;
+  const over=()=>meas.offsetHeight>limit;
+  const newPage=()=>{pages.push({h:cur.join(""),n:curN});cur=[];curN=[];meas.innerHTML=""};
+  const add=(html,n)=>{meas.insertAdjacentHTML("beforeend",html);cur.push(html);curN.push(n)};
+  const undo=()=>{meas.lastElementChild.remove();cur.pop();curN.pop()};
+  add(head,null);
+  for(const r of rows){
+    const h=hadithParts(r,b);
+    add(h.hn,h.n);
+    if(over()&&cur.length>1){undo();newPage();add(h.hn,h.n)}
+    for(const pt of h.parts){
+      let text=pt.text,cont=false;
+      while(text){
+        const html=pHTML(pt,text,cont);add(html,h.n);
+        if(!over())break;
+        undo();
+        if(pt.fixed){newPage();continue}
+        const cjk=text.split(" ").length<text.length/25, J=cjk?"":" ";
+        const words=cjk?Array.from(text):text.split(" ");
+        let lo=0,hi=words.length-1;
+        while(lo<hi){const mid=Math.ceil((lo+hi)/2);meas.insertAdjacentHTML("beforeend",pHTML(pt,words.slice(0,mid).join(J)+" …",cont));const o=over();meas.lastElementChild.remove();if(o)hi=mid-1;else lo=mid}
+        if(lo<(cjk?12:4)){if(cur.length){newPage();continue}lo=Math.max(lo,1)}
+        add(pHTML(pt,words.slice(0,lo).join(J)+" …",cont),h.n);newPage();
+        text=words.slice(lo).join(J);cont=true;
+      }
+    }
+  }
+  if(cur.length)pages.push({h:cur.join(""),n:curN});
+  meas.remove();
+  const step=spread?2:1;
+  let p=0;
+  if(keepAnchor){const pi=pages.findIndex(pg=>pg.n.includes(anchorN));if(pi>=0)p=pi-(pi%step)}
+  const pageHTML=(i,cls)=>{const mk=getMarks()[bid];return pages[i]?`<div class="pg ${cls}">${mk&&mk.s===sec.k&&pages[i].n.includes(mk.n)?'<span class="ribbon"></span>':""}${pages[i].h}<div class="folio">${fmt(i+1)}</div></div>`:`<div class="pg ${cls}"></div>`};
+  function draw(){
+    book.innerHTML=spread?pageHTML(p,"l")+pageHTML(p+1,"r"):pageHTML(p,"s");
+    document.getElementById("pinfo").textContent=`${t("page")} ${fmt(p+1)}${spread&&pages[p+1]?"–"+fmt(p+2):""} ${t("of")} ${fmt(pages.length)}`;
+    document.getElementById("pprev").disabled=p===0&&!prevS;
+    document.getElementById("pnext").disabled=p+step>=pages.length&&!nextS;
+    const first=pages[p].n.find(x=>x!=null);if(first!=null)saveLast(first);
+    S.view={type:"book",first,ns:[...pages[p].n,...(spread&&pages[p+1]?pages[p+1].n:[])],redraw:draw};
+    syncMark();
+  }
+  draw();
+  const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let busy=false;
+  function flip(dir){
+    if(busy)return;
+    const np=p+dir*step;
+    if(np<0){if(prevS)go(`read-${bid}-${enc(prevS.k)}`);return}
+    if(np>=pages.length){if(nextS)go(`read-${bid}-${enc(nextS.k)}`);return}
+    if(reduce){p=np;draw();return}
+    busy=true;
+    const W=book.clientWidth,half=spread?W/2:W;
+    const leaf=document.createElement("div");leaf.className="leaf";leaf.style.width=half+"px";
+    const face=(i,cls)=>`<div class="face ${cls}">${pageHTML(i,spread?(cls==="front"?(dir>0?"r":"l"):(dir>0?"l":"r")):"s").replace('class="pg','style="height:100%" class="pg')}</div>`;
+    let from,to;
+    if(spread){
+      if(dir>0){ // right page turns to the left
+        leaf.style.left=half+"px";leaf.style.transformOrigin="left center";
+        leaf.innerHTML=face(p+1,"front")+face(np,"back");
+        book.children[1].outerHTML=pageHTML(np+1,"r");
+        from="rotateY(0deg)";to="rotateY(-180deg)";
+      }else{
+        leaf.style.left="0px";leaf.style.transformOrigin="right center";
+        leaf.innerHTML=face(p,"front")+face(np+1,"back");
+        book.children[0].outerHTML=pageHTML(np,"l");
+        from="rotateY(0deg)";to="rotateY(180deg)";
+      }
+    }else{
+      leaf.style.left="0px";leaf.style.transformOrigin="left center";
+      if(dir>0){leaf.innerHTML=face(p,"front")+`<div class="face back"><div class="pg s" style="height:100%"></div></div>`;book.children[0].outerHTML=pageHTML(np,"s");from="rotateY(0deg)";to="rotateY(-180deg)"}
+      else{leaf.innerHTML=face(np,"front")+`<div class="face back"><div class="pg s" style="height:100%"></div></div>`;from="rotateY(-180deg)";to="rotateY(0deg)"}
+    }
+    book.appendChild(leaf);
+    const anim=leaf.animate([{transform:from},{transform:to}],{duration:650,easing:"cubic-bezier(.3,.1,.25,1)"});
+    anim.onfinish=()=>{p=np;draw();busy=false};
+  }
+  document.getElementById("pprev").onclick=()=>flip(-1);
+  document.getElementById("pnext").onclick=()=>flip(1);
+  book.onclick=e=>{if(e.target.closest("a,button")||getSelection().toString())return;const r=book.getBoundingClientRect();flip(e.clientX-r.left<r.width*0.3?-1:e.clientX-r.left>r.width*0.7?1:0)};
+  let sx=null,sy=null;
+  book.addEventListener("touchstart",e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});
+  book.addEventListener("touchend",e=>{if(sx==null)return;const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)*1.3)flip(dx<0?1:-1);sx=null},{passive:true});
+  document.onkeydown=e=>{if(route().v!=="read"||e.target.closest("input,select"))return;if(e.key==="f")window.__setFocus(!S.focus);if(e.key==="Escape"&&S.focus)window.__setFocus(false);if(S.mode!=="book")return;if(e.key==="ArrowRight")flip(1);if(e.key==="ArrowLeft")flip(-1)};
+}
+function currentAnchor(){
+  if(S.view&&S.view.type==="book")return S.view.first;
+  const els=document.querySelectorAll(".scroll .h");
+  for(const el of els){const r=el.getBoundingClientRect();if(r.bottom>90)return +el.dataset.n}
+  return null;
+}
+
+/* ---------- main render ---------- */
+let rsz;window.addEventListener("resize",()=>{clearTimeout(rsz);rsz=setTimeout(()=>{const r=route();if(r.v==="read"&&S.mode==="book")renderRead(r.b,r.s,currentAnchor())},300)});
+async function render(){
+  setLangClass();
+  try{await loadIndex()}catch(e){app.innerHTML=`<div class="loading">${esc(t("err"))}</div>`;return}
+  const r=route();
+  window.onscroll=null;
+  if(r.v!=="read"){S.focus=false;document.body.classList.remove("focus")}
+  if(r.v==="read")return renderRead(r.b,r.s,r.n);
+  window.scrollTo(0,0);
+  if(r.v==="book")return renderBook(r.b);
+  renderLib();
+}
+render();
+})();
+</script>
+
+</body>
+</html>
