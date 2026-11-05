@@ -281,6 +281,7 @@ body.focus .bnav{gap:8px;flex-wrap:wrap;justify-content:center}
 
 /* ---- install as app ---- */
 .installbtn{display:inline-flex;align-items:center;gap:8px}
+.installbtn svg{width:16px;height:16px;flex:0 0 auto}
 .installtip{position:fixed;left:12px;right:12px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:60;background:var(--paper);color:var(--ink);border:1px solid var(--gold);border-radius:12px;padding:14px 16px;box-shadow:0 10px 30px var(--shadow);font-size:.92rem;line-height:1.55;max-width:520px;margin:0 auto}
 .installtip b{color:var(--gold)}
 .installtip button{float:right;margin:-4px -6px 0 8px}
@@ -288,6 +289,84 @@ body.focus .bnav{gap:8px;flex-wrap:wrap;justify-content:center}
 /* ---- machine-translation notice ---- */
 .mtnote{font-size:.72rem;line-height:1.5;color:#8a5a12;background:rgba(201,160,60,.14);border:1px solid rgba(201,160,60,.45);border-radius:8px;padding:6px 10px;margin:6px auto 4px;max-width:46em;font-family:var(--f-ui)}
 .book.compact .pg .chap-head p.mtnote{font-size:.66rem;padding:4px 8px}
+
+/* ================= library bookcase ================= */
+:root{--grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .5 0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");--woodgrain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='240'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.006 .22' numOctaves='3' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .1 0 0 0 0 .05 0 0 0 0 .02 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='400' height='240' filter='url(%23w)'/%3E%3C/svg%3E")}
+html,body{overflow-x:clip}
+.library{margin:18px calc(50% - 50vw) 34px;padding:0 max(10px,calc(50vw - 640px))}
+.bookcase{position:relative;border-radius:6px 6px 4px 4px;padding:0 26px 18px;
+  background:radial-gradient(ellipse 60% 55% at var(--lx,50%) 0%,rgba(255,196,120,.30),transparent 70%),
+    linear-gradient(90deg,rgba(0,0,0,.55),transparent 7%,transparent 93%,rgba(0,0,0,.55)),var(--woodgrain),#2b1c12;
+  background-size:auto,auto,400px 240px,auto;
+  box-shadow:0 30px 60px -20px rgba(20,10,4,.65),0 0 0 1px rgba(0,0,0,.4);transition:background-position .3s}
+.bookcase::before,.bookcase::after{content:"";position:absolute;top:0;bottom:0;width:26px;z-index:3;
+  background:linear-gradient(90deg,#3d2717,#6b4529 30%,#7d5532 50%,#5a3a22 75%,#2e1d11),var(--woodgrain);background-blend-mode:multiply;box-shadow:inset 0 0 0 1px rgba(0,0,0,.35)}
+.bookcase::before{left:0;border-radius:6px 0 0 4px}.bookcase::after{right:0;border-radius:0 6px 4px 0}
+.crown{height:34px;margin:0 -26px 6px;border-radius:6px 6px 0 0;position:relative;z-index:4;
+  background:linear-gradient(180deg,#8a5d36 0,#6b4428 30%,#4a2e1a 62%,#2a1a0f 100%),var(--woodgrain);background-blend-mode:multiply;
+  box-shadow:0 8px 14px -6px rgba(0,0,0,.7),inset 0 2px 0 rgba(255,220,170,.25)}
+.crown::after{content:"";position:absolute;left:0;right:0;bottom:7px;height:3px;background:linear-gradient(90deg,transparent,rgba(212,172,92,.55),transparent)}
+.shelfwrap{position:relative;padding-top:20px}
+.shelfwrap .row2{display:flex;align-items:flex-end;gap:3px;padding:0 6px;overflow-x:auto;overflow-y:visible;scrollbar-width:none;min-height:256px;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 10px,#000 calc(100% - 10px),transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 10px,#000 calc(100% - 10px),transparent 100%);
+  background:linear-gradient(0deg,rgba(0,0,0,.45),transparent 70px);perspective:900px}
+.shelfwrap .row2::-webkit-scrollbar{display:none}
+.board{height:20px;margin:0 -26px;position:relative;z-index:2;border-radius:2px;
+  background:linear-gradient(180deg,#a87a4d 0,#8b6039 12%,#6d4727 45%,#4b2f19 100%),var(--woodgrain);background-blend-mode:multiply;
+  box-shadow:0 14px 18px -6px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,230,190,.35)}
+.plate{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:inline-flex;gap:8px;align-items:baseline;white-space:nowrap;
+  padding:2px 14px;border-radius:3px;font:600 .66rem/1.5 var(--f-ui);letter-spacing:.16em;text-transform:uppercase;color:#3b2a10;
+  background:linear-gradient(180deg,#f3dc9c,#c99a45 55%,#a87a2e);box-shadow:0 1px 2px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.55),inset 0 -1px 0 rgba(0,0,0,.25);text-shadow:0 1px 0 rgba(255,240,200,.6);max-width:calc(100% - 40px);overflow:hidden;text-overflow:ellipsis}
+.plate small{font-family:var(--f-ar);font-size:.82rem;letter-spacing:0;text-transform:none;font-weight:700}
+/* --- spines --- */
+.bk{flex:0 0 auto;position:relative;width:var(--w,52px);height:var(--h,210px);border:0;padding:0;cursor:pointer;border-radius:3px 3px 1px 1px;color:var(--fg,#EED9A0);
+  background:linear-gradient(90deg,rgba(0,0,0,.5) 0,rgba(255,255,255,.07) 14%,rgba(255,255,255,.2) 28%,rgba(255,255,255,0) 52%,rgba(0,0,0,.18) 80%,rgba(0,0,0,.55) 100%),var(--grain),var(--c);
+  box-shadow:2px 0 3px rgba(0,0,0,.45),inset 0 2px 0 rgba(255,255,255,.12);display:flex;flex-direction:column;align-items:center;justify-content:space-between;
+  transform-origin:50% 100%;transition:transform .28s cubic-bezier(.2,.7,.2,1),box-shadow .28s,filter .28s}
+.shelfwrap:not(.in) .bk{opacity:0}
+.shelfwrap.in .bk{animation:bkIn .6s backwards cubic-bezier(.2,.7,.2,1);animation-delay:calc(var(--j,0) * 40ms)}
+.bk:hover,.bk:focus-visible{transform:translateY(-12px);box-shadow:4px 10px 16px rgba(0,0,0,.55),inset 0 2px 0 rgba(255,255,255,.18);filter:brightness(1.08);z-index:5;outline:none}
+.bk:focus-visible{box-shadow:0 0 0 2px #f3dc9c,4px 10px 16px rgba(0,0,0,.55)}
+.bk.pull{transform:translateY(-34px) scale(1.06);filter:brightness(1.15);z-index:6;transition-duration:.3s}
+@keyframes bkIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.bk .bands{position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg,transparent 14px,var(--band,#C9A55A) 14px,var(--band,#C9A55A) 15px,transparent 15px,transparent 18px,rgba(0,0,0,.35) 18px,rgba(255,255,255,.22) 20px,rgba(0,0,0,.35) 23px,transparent 23px,transparent 26px,var(--band,#C9A55A) 26px,var(--band,#C9A55A) 27px,transparent 27px),
+    linear-gradient(0deg,transparent 14px,var(--band,#C9A55A) 14px,var(--band,#C9A55A) 15px,transparent 15px,transparent 18px,rgba(0,0,0,.35) 18px,rgba(255,255,255,.22) 20px,rgba(0,0,0,.35) 23px,transparent 23px,transparent 26px,var(--band,#C9A55A) 26px,var(--band,#C9A55A) 27px,transparent 27px);opacity:.9}
+.bk .lbl{margin-top:36px;padding:8px 0;width:calc(100% - 12px);display:flex;justify-content:center;border-radius:2px;background:var(--lab,rgba(0,0,0,.28));box-shadow:inset 0 0 0 1px var(--band,rgba(201,165,90,.7)),inset 0 0 0 3px rgba(0,0,0,.25)}
+.bk .t{writing-mode:vertical-rl;font-family:var(--f-display);font-size:.84rem;letter-spacing:.05em;max-height:calc(var(--h) - 120px);overflow:hidden;white-space:nowrap;text-overflow:ellipsis;text-shadow:0 1px 0 rgba(0,0,0,.6)}
+.bk .a{font-family:var(--f-ar);font-size:.96rem;margin-bottom:34px;writing-mode:vertical-rl;max-height:72px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;text-shadow:0 1px 0 rgba(0,0,0,.6)}
+.bk.ht{--c:#F1ECE0;--fg:#A8261C;--band:#B8322A;--lab:transparent;box-shadow:2px 0 3px rgba(0,0,0,.45);background:linear-gradient(90deg,rgba(0,0,0,.28) 0,rgba(255,255,255,.4) 25%,rgba(255,255,255,0) 55%,rgba(0,0,0,.25) 100%),var(--grain),var(--c)}
+.bk.ht .t,.bk.ht .a{text-shadow:none}
+.bk .rb{position:absolute;top:-6px;right:7px;width:10px;height:64px;background:#C43C3C;clip-path:polygon(0 0,100% 0,100% 100%,50% calc(100% - 6px),0 100%);z-index:1;box-shadow:0 1px 2px rgba(0,0,0,.4)}
+.bk .lt{position:absolute;top:30px;left:50%;transform:translateX(-50%);font:600 .52rem var(--f-ui);letter-spacing:.08em;background:rgba(255,255,255,.2);color:#fff;border-radius:3px;padding:1px 4px}
+.bk.lean{transform:rotate(-5deg);transform-origin:0 100%;margin-left:12px}
+.bk.lean:hover{transform:rotate(-5deg) translateY(-10px)}
+/* --- face-out books (cover visible) --- */
+.bk.fo{width:calc(var(--h) * .7);background:none;box-shadow:none;margin:0 10px;transform-style:preserve-3d}
+.bk.fo .fo3d{position:absolute;inset:0;transform:rotateY(-14deg);transform-origin:0 50%;transform-style:preserve-3d;transition:transform .35s cubic-bezier(.2,.7,.2,1);box-shadow:8px 10px 18px rgba(0,0,0,.55);border-radius:2px 5px 5px 2px}
+.bk.fo .fo3d::after{content:"";position:absolute;top:3px;bottom:3px;right:-7px;width:8px;transform:rotateY(60deg);transform-origin:0 50%;
+  background:repeating-linear-gradient(90deg,#f3ead6 0 1px,#d6c7a3 1px 2px);border-radius:0 2px 2px 0}
+.bk.fo:hover .fo3d,.bk.fo:focus-visible .fo3d{transform:rotateY(-4deg) translateZ(14px)}
+.bk.fo:hover{transform:translateY(-8px);filter:none}
+/* --- covers (real image or classic leather binding) --- */
+.cvimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;background:#fff}
+.cvgen{position:absolute;inset:0;border-radius:inherit;overflow:hidden;container-type:inline-size;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6%;
+  background:radial-gradient(ellipse at 50% 40%,rgba(255,255,255,.14),transparent 65%),linear-gradient(90deg,rgba(0,0,0,.45),transparent 9%,transparent 92%,rgba(0,0,0,.3)),var(--grain),var(--c);color:#E8CF8E;text-align:center}
+.cvgen .orn{position:absolute;inset:0;width:100%;height:100%}
+.cvgen .cva{position:relative;font-family:var(--f-ar);font-weight:700;font-size:clamp(11px,12.5cqw,46px);line-height:1.35;padding:0 16%;text-shadow:0 1px 0 rgba(0,0,0,.65),0 -1px 0 rgba(255,235,180,.25);direction:rtl}
+.cvgen .cve{position:relative;font-family:var(--f-display);font-size:clamp(7px,5.4cqw,17px);letter-spacing:.06em;opacity:.9;padding:0 18%;text-shadow:0 1px 0 rgba(0,0,0,.6)}
+.cover{animation:coverIn .55s both cubic-bezier(.2,.7,.2,1)}
+@keyframes coverIn{from{opacity:0;transform:translateY(18px) rotateY(-18deg)}to{opacity:1;transform:none}}
+@media (max-width:640px){
+  .library{padding:0 6px}
+  .bookcase{padding:0 14px 12px}.bookcase::before,.bookcase::after{width:14px}.crown,.board{margin:0 -14px}
+  .shelfwrap .row2{min-height:216px;gap:2px}
+  .bk{--h2:calc(var(--h) * .84);height:var(--h2);width:calc(var(--w) * .86)}
+  .bk.fo{width:calc(var(--h2) * .7)}
+  .bk .t{font-size:.76rem;max-height:calc(var(--h2) - 110px)}
+  .plate{font-size:.58rem;letter-spacing:.12em}
+}
+@media (prefers-reduced-motion:reduce){.shelfwrap .bk{animation:none!important;transition:none;opacity:1!important}.cover{animation:none}}
 </style>
 
 </head>
@@ -409,7 +488,20 @@ async function doInstall(){if(S.installEvt){S.installEvt.prompt();try{await S.in
 const installBtn=()=>isApp()||!isTouch()&&!S.installEvt?"":`<button class="btn ghost installbtn" type="button">${RIB_O} ${esc(t("install"))}</button>`;
 if("serviceWorker" in navigator&&(location.protocol==="https:"||location.hostname==="localhost"))addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
 
+/* ---------- covers & shelf books ---------- */
+const ORN='<svg class="orn" viewBox="0 0 140 200" preserveAspectRatio="none" aria-hidden="true"><g fill="none" stroke="#D9B66A" stroke-width="1.1" opacity=".9"><rect x="7" y="7" width="126" height="186" rx="2"/><rect x="12" y="12" width="116" height="176" rx="1.5" stroke-width=".6"/><path d="M12 30q18 0 18-18M128 30q-18 0-18-18M12 170q18 0 18 18M128 170q-18 0-18 18" stroke-width=".9"/><path d="M70 58l9 22 22 9-22 9-9 22-9-22-22-9 22-9z" stroke-width=".8" opacity=".55"/><circle cx="70" cy="89" r="34" stroke-width=".6" opacity=".45"/><circle cx="70" cy="89" r="38" stroke-width=".4" opacity=".35"/></g><g fill="#D9B66A" opacity=".85"><circle cx="70" cy="30" r="2"/><circle cx="70" cy="170" r="2"/></g></svg>';
+function coverHTML(b){
+  if(b.cover)return `<img class="cvimg" src="${b.cover}" alt="" loading="lazy" decoding="async">`;
+  const au=S.lang==="ar"?(b.authar||b.auth||""):(b.auth||"");
+  return `<span class="cvgen" style="--c:${COLORS[b.id]||"#2E4A3C"}">${ORN}<span class="cva">${esc(b.ar)}</span><span class="cve">${esc(au)}</span></span>`;
+}
 /* ---------- library ---------- */
+function bookHTML(b,i,mode){
+  const h=HEIGHT[b.id]||200, w=b.kind==="pdf"?(b.total>300?58:b.total>150?52:46):b.total>3000?62:b.total>1000?56:50;
+  const rb=getMarks()[b.id]?'<span class="rb"></span>':"";
+  if(mode==="fo")return `<button class="bk fo" style="--h:${Math.max(h,206)}px;--j:${i}" data-book="${b.id}" title="${esc(bookTitle(b))}" aria-label="${esc(bookTitle(b))}"><span class="fo3d">${coverHTML(b)}</span>${rb}</button>`;
+  return `<button class="bk${b.cat==="nabhani"?" ht":""}${mode==="lean"?" lean":""}" style="${b.cat==="nabhani"?"":`--c:${COLORS[b.id]};`}--h:${h}px;--w:${w}px;--j:${i}" data-book="${b.id}" title="${esc(bookTitle(b))}" aria-label="${esc(bookTitle(b))}"><span class="bands"></span>${rb}<span class="lbl"><span class="t">${esc(SPINE[b.id]||b.en)}</span></span>${b.langs.length===1&&b.langs[0]==="eng"?'<span class="lt">EN</span>':""}<span class="a">${esc(SPINE_AR[b.id]||b.ar)}</span></button>`;
+}
 function spineHTML(b){
   return `<button class="spine" style="--c:${COLORS[b.id]};--h:${HEIGHT[b.id]}px;--w:${b.kind==="pdf"?(b.total>300?58:b.total>150?52:46):b.total>3000?62:b.total>1000?56:50}px" data-book="${b.id}" title="${esc(bookTitle(b))}">
     ${getMarks()[b.id]?'<span class="rb"></span>':""}<span class="t">${esc(SPINE[b.id]||b.en)}</span>${b.langs.length===1&&b.langs[0]==="eng"?'<span class="lt">EN</span>':""}<span class="a">${esc(SPINE_AR[b.id]||b.ar)}</span></button>`;
@@ -432,13 +524,23 @@ function renderLib(){
       ${marksHTML()}
       ${installBtn()?`<div class="resume">${installBtn()}</div>`:""}
     </section>
-    <div class="case">
-      ${CATS.map(([k,l,ar,ids])=>{const bs=ids.map(findBook).filter(Boolean);return bs.length?`<div class="shelf"><h2>${esc(t(l))} <small>${ar}</small></h2><div class="row">${bs.map(spineHTML).join("")}</div></div>`:""}).join("")}
+    <section class="library" aria-label="${esc(t("books"))}"><div class="bookcase"><div class="crown"></div>
+      ${(()=>{let n=0;return CATS.map(([k,l,ar,ids])=>{const bs=ids.map(findBook).filter(Boolean);if(!bs.length)return "";
+        const fo=new Set(bs.length>=4?(k==="nabhani"?[0,5,12]:[0]):[]);
+        return `<div class="shelfwrap" data-cat="${k}"><div class="row2">${bs.map((b,i)=>bookHTML(b,i,fo.has(i)?"fo":(i===bs.length-1&&bs.length>=5?"lean":""))).join("")}</div><div class="board"><span class="plate">${esc(t(l))}<small>${ar}</small></span></div></div>`}).join("")})()}
+    </div></section>
+    <div class="case" hidden>
       ${SOON.length?`<div class="shelf"><h2>${esc(t("soon"))}</h2><div class="row">${SOON.map(([n,a,c,u],i)=>u?`<a class="spine" href="${u}" target="_blank" rel="noopener" style="--c:${c};--h:${200-i*6}px;--w:50px" title="${esc(n)} · PDF"><span class="t">${esc(n.replace(/^(Shahih|Musnad Imam|Al-Adab) /,""))}</span><span class="a">${a}</span><span class="tag">PDF ↗</span></a>`:`<div class="spine soon" style="--c:${c};--h:${200-i*6}px;--w:50px" aria-label="${esc(n)} (${esc(t("soonTag"))})"><span class="t">${esc(n.replace(/^(Shahih|Musnad Imam|Al-Adab) /,""))}</span><span class="a">${a}</span><span class="tag">${esc(t("soonTag"))}</span></div>`).join("")}</div></div>`:""}
     </div>
     <p class="note">${esc(t("note"))}</p>
   </main>`;
-  app.querySelectorAll("[data-book]").forEach(b=>b.onclick=()=>go("kitab-"+b.dataset.book));
+  const rm=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  app.querySelectorAll("[data-book]").forEach(b=>b.onclick=()=>{if(rm)return go("kitab-"+b.dataset.book);b.classList.add("pull");setTimeout(()=>go("kitab-"+b.dataset.book),300)});
+  const shelves=app.querySelectorAll(".shelfwrap");
+  if("IntersectionObserver" in window&&!rm){const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{rootMargin:"0px 0px -8% 0px",threshold:.12});shelves.forEach(x=>io.observe(x))}
+  else shelves.forEach(x=>x.classList.add("in"));
+  const bc=app.querySelector(".bookcase");
+  if(bc&&!rm){let raf=0;bc.onpointermove=e=>{if(raf)return;raf=requestAnimationFrame(()=>{raf=0;const r=bc.getBoundingClientRect();bc.style.setProperty("--lx",((e.clientX-r.left)/r.width*100).toFixed(1)+"%")})};bc.onpointerleave=()=>bc.style.removeProperty("--lx")}
   app.querySelectorAll(".installbtn").forEach(b=>b.onclick=doInstall);
   bindLang(app,render);
 }
@@ -451,8 +553,7 @@ function renderBook(id){
   app.innerHTML=`
   <header class="top"><div class="wrap"><a class="brand" href="#"><b>Maktabah Ilmu</b><span>مكتبة العلم</span></a><a class="iconbtn sbtn" href="#cari" aria-label="${esc(t("search"))}" title="${esc(t("search"))}"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M13 13l4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></a>${langSeg()}</div></header>
   <main class="wrap"><div class="detail">
-    <div class="cover" style="--c:${COLORS[id]}"><svg aria-hidden="true"><rect width="100%" height="100%" fill="url(#girih)"/></svg><div class="frame"></div>
-      <div class="ca">${esc(b.ar)}</div><div class="ce">${esc(b.en)}</div><div class="ce" style="font-size:.8rem;opacity:.8">${esc(b.auth)}</div></div>
+    <div class="cover" style="--c:${COLORS[id]};padding:0">${coverHTML(b)}</div>
     <div class="meta">
       <a class="btn ghost back" href="#">← ${esc(t("back"))}</a>
       <div><div class="arname">${esc(b.ar)}</div><h1>${esc(bookTitle(b))}</h1></div>

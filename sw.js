@@ -2,7 +2,7 @@
 // - Halaman utama: ambil dari jaringan dulu (selalu versi terbaru), cadangan dari cache bila offline.
 // - Data kitab, indeks pencarian, ikon & library: dari cache, lalu diperbarui di latar (stale-while-revalidate).
 // - Permintaan PDF per bagian (header Range) dilewatkan langsung ke jaringan.
-const VERSION = 'v1';
+const VERSION = 'v2';
 const SHELL = `shell-${VERSION}`;
 const DATA = 'data-v1';
 const SHELL_FILES = ['./', 'index.html', 'manifest.webmanifest', 'vendor/page-flip.browser.js', 'icons/icon-192.png'];

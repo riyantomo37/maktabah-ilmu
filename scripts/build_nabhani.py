@@ -79,7 +79,12 @@ def pdf_entry(bid, title_ar):
         e = max(e, s)
         secs.append({'k': str(i + 1), 't': t or title_ar, 'ta': '', 'c': e - s + 1, 'f': s, 'l': e, 'ch': 0})
     r = d[0].rect
-    return dict(AUTH, id=bid, en=title_ar, ar=title_ar, kind='pdf', langs=['ara'], file=f'{PDFDIR}/{bid}.pdf',
+    # sampul = halaman pertama PDF resmi (judul kaligrafi khas terbitan Hizbut Tahrir)
+    os.makedirs('covers', exist_ok=True)
+    from PIL import Image
+    z = 420 / r.width; pix = d[0].get_pixmap(matrix=pymupdf.Matrix(z, z))
+    Image.frombytes('RGB', (pix.width, pix.height), pix.samples).save(f'covers/{bid}.webp', 'WEBP', quality=78, method=6)
+    return dict(AUTH, id=bid, en=title_ar, ar=title_ar, kind='pdf', langs=['ara'], file=f'{PDFDIR}/{bid}.pdf', cover=f'covers/{bid}.webp',
                 ratio=round(r.width / r.height, 4), secs=secs, total=n, chunks=0, src=SRC)
 
 # ---------------------------------------------------------------- translations
@@ -280,7 +285,7 @@ def text_entry(bid, lang, title, ar_title, pair_ids):
         entries.append({'k': str(i), 't': t, 'ta': '', 'c': len(body), 'f': body[0][0], 'l': body[-1][0], 'ch': 0})
     json.dump(chunk, open(f'{OUT}/{sid}-0.json', 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
     src = SRC.replace('PDF resmi', 'terjemah Inggris resmi') if lang == 'en' else 'HTI-Press, via archive.org (PDF digital)'
-    e = dict(AUTH, id=sid, en=title, ar=ar_title, kind='prose', langs=['eng' if lang == 'en' else 'ind'],
+    e = dict(AUTH, id=sid, en=title, ar=ar_title, cover=f'covers/{bid}.webp', kind='prose', langs=['eng' if lang == 'en' else 'ind'],
              secs=entries, total=sum(x['c'] for x in entries), chunks=1, src=src, pairs=pair_ids)
     print(f'  {sid:16} secs={len(entries):3} paras={e["total"]}')
     return e
