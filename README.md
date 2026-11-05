@@ -13,7 +13,8 @@ d/<kitab>-<n>.json  isi kitab, dipecah per ~1,6 MB supaya cepat dimuat
 scripts/          skrip Python yang membuat folder d/ dari sumber data terbuka
 .nojekyll         supaya GitHub Pages tidak mengolah ulang file
 s/                indeks kata untuk pencarian (dibuat oleh scripts/build_search.py; jalankan ulang setelah menambah kitab)
-vendor/           StPageFlip (efek halaman melengkung)
+vendor/           StPageFlip (efek halaman melengkung) dan pdf.js (menampilkan PDF Arab)
+pdf/              PDF Arab karya an-Nabhani, apa adanya dari penerbit
 ```
 
 Format satu baris teks di `d/<kitab>-<n>.json`:
@@ -59,6 +60,7 @@ Alternatif tanpa Git: **Cloudflare Pages** atau **Netlify** (seret folder ini ke
 | Riyadhus Shalihin, Bulughul Maram, Al-Adab al-Mufrad, Syamail, Misykat | [AhmedBaset/hadith-json](https://github.com/AhmedBaset/hadith-json) |
 | Karya Imam Ahmad (Musnad lengkap, az-Zuhd, Ushul as-Sunnah), al-Ghazali (Ihya', Bidayatul Hidayah, al-Munqidz, Kimiya' as-Sa'adah, Misykat al-Anwar, Tahafut), Muqaddimah Ibnu Khaldun, Muruj adz-Dzahab, rihlah Ibnu Battutah, Ibnu Jubair, Ibnu Fadhlan, al-I'tibar, 'Aja'ib al-Hind, al-Idrisi, Hayy bin Yaqzhan, Ibnu Sina (al-Qanun, al-Isyarat, an-Najat) | [OpenITI](https://github.com/OpenITI) (CC BY-NC-SA 4.0), teks Arab; dibangun dengan `scripts/build_openiti.py` |
 | Terjemah Inggris: The Confessions of Al Ghazzali & The Alchemy of Happiness (Claud Field), Hayy ibn Yaqzan (Simon Ockley, 1708) | Wikisource & Project Gutenberg (domain publik); dibangun dengan `scripts/build_translations.py` |
+| Karya Syekh Taqiyuddin an-Nabhani (24 kitab Arab; terjemah Inggris 10, Indonesia 6) | PDF Arab & terjemah Inggris resmi dari [hizb-ut-tahrir.org](http://www.hizb-ut-tahrir.org/index.php/AR/books) (penerbit mengizinkan penerbitan ulang tanpa diubah dengan menyebut sumber); terjemah Indonesia HTI-Press via archive.org; dibangun dengan `scripts/build_nabhani.py` |
 
 Mode Buku memakai [StPageFlip](https://github.com/Nodlik/StPageFlip) (MIT, `vendor/`) untuk efek halaman melengkung.
 
