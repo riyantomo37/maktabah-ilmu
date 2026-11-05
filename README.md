@@ -56,6 +56,9 @@ Alternatif tanpa Git: **Cloudflare Pages** atau **Netlify** (seret folder ini ke
 | Musnad Ahmad (sebagian), Sunan ad-Darimi | [gadingnst/hadith-api](https://github.com/gadingnst/hadith-api) |
 | Riyadhus Shalihin, Bulughul Maram, Al-Adab al-Mufrad, Syamail, Misykat | [AhmedBaset/hadith-json](https://github.com/AhmedBaset/hadith-json) |
 | Karya Imam Ahmad (Musnad lengkap, az-Zuhd, Ushul as-Sunnah), al-Ghazali (Ihya', Bidayatul Hidayah, al-Munqidz, Kimiya' as-Sa'adah, Misykat al-Anwar, Tahafut), Muqaddimah Ibnu Khaldun, Muruj adz-Dzahab, rihlah Ibnu Battutah, Ibnu Jubair, Ibnu Fadhlan, al-I'tibar, 'Aja'ib al-Hind, al-Idrisi, Hayy bin Yaqzhan, Ibnu Sina (al-Qanun, al-Isyarat, an-Najat) | [OpenITI](https://github.com/OpenITI) (CC BY-NC-SA 4.0), teks Arab; dibangun dengan `scripts/build_openiti.py` |
+| Terjemah Inggris: The Confessions of Al Ghazzali & The Alchemy of Happiness (Claud Field), Hayy ibn Yaqzan (Simon Ockley, 1708) | Wikisource & Project Gutenberg (domain publik); dibangun dengan `scripts/build_translations.py` |
+
+Mode Buku memakai [StPageFlip](https://github.com/Nodlik/StPageFlip) (MIT, `vendor/`) untuk efek halaman melengkung.
 
 Teks Arab kitab klasik adalah warisan bersama. Sebagian terjemah masih milik penerjemahnya, jadi website ini sebaiknya tetap gratis dan non-komersial, dengan sumber tetap dicantumkan.
 
