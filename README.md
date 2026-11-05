@@ -55,6 +55,7 @@ Alternatif tanpa Git: **Cloudflare Pages** atau **Netlify** (seret folder ini ke
 | Tafsir Ibnu Katsir, as-Sa'di, al-Jalalain, al-Mukhtashar | [spa5k/tafsir_api](https://github.com/spa5k/tafsir_api) |
 | Musnad Ahmad (sebagian), Sunan ad-Darimi | [gadingnst/hadith-api](https://github.com/gadingnst/hadith-api) |
 | Riyadhus Shalihin, Bulughul Maram, Al-Adab al-Mufrad, Syamail, Misykat | [AhmedBaset/hadith-json](https://github.com/AhmedBaset/hadith-json) |
+| Karya Imam Ahmad (Musnad lengkap, az-Zuhd, Ushul as-Sunnah), al-Ghazali (Ihya', Bidayatul Hidayah, al-Munqidz, Kimiya' as-Sa'adah, Misykat al-Anwar, Tahafut), Muqaddimah Ibnu Khaldun, Muruj adz-Dzahab, rihlah Ibnu Battutah, Ibnu Jubair, Ibnu Fadhlan, al-I'tibar, 'Aja'ib al-Hind, al-Idrisi, Hayy bin Yaqzhan, Ibnu Sina (al-Qanun, al-Isyarat, an-Najat) | [OpenITI](https://github.com/OpenITI) (CC BY-NC-SA 4.0), teks Arab; dibangun dengan `scripts/build_openiti.py` |
 
 Teks Arab kitab klasik adalah warisan bersama. Sebagian terjemah masih milik penerjemahnya, jadi website ini sebaiknya tetap gratis dan non-komersial, dengan sumber tetap dicantumkan.
 
