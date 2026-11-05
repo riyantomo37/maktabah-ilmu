@@ -203,6 +203,27 @@ body.focus .bnav{gap:8px;flex-wrap:wrap;justify-content:center}
 .toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:8px 14px;border-radius:999px;font-size:.84rem;z-index:50}
 @media (max-width:560px){.pg{padding:20px 18px 36px}.h{padding:16px}.hide-s{display:none}}
 @media (prefers-reduced-motion:reduce){.spine{transition:none}}
+
+/* ---- realistic book (StPageFlip) ---- */
+.stf__parent{position:relative;display:block;box-sizing:border-box;transform:translateZ(0);touch-action:pan-y}
+.stf__wrapper{position:relative;width:100%;height:100%;box-sizing:border-box}
+.stf__parent canvas{position:absolute;width:100%;height:100%;left:0;top:0}
+.stf__block{position:absolute;width:100%;height:100%;box-sizing:border-box;perspective:2000px}
+.stf__item{display:none;position:absolute;transform-style:preserve-3d}
+.stf__outerShadow,.stf__innerShadow,.stf__hardShadow,.stf__hardInnerShadow{position:absolute;left:0;top:0}
+.book.real{display:block;perspective:none;background:none}
+.book.real .flipbook{margin:0 auto}
+.book.real::after{content:"";position:absolute;left:3%;right:3%;bottom:-14px;height:28px;background:radial-gradient(ellipse at center,rgba(40,25,10,.38),transparent 70%);z-index:-1;filter:blur(4px)}
+.book.real .edge{position:absolute;top:4px;bottom:-5px;width:9px;z-index:-1;border-radius:2px;background:repeating-linear-gradient(90deg,#f3ead6 0 1px,#d8cba9 1px 2px)}
+.book.real .edge.le{left:-7px}.book.real .edge.re{right:-7px}.book.real:not(.spread) .edge.le{display:none}
+.book.real .pg{box-sizing:border-box;border:0;border-radius:0;overflow:hidden;box-shadow:none;
+  background-color:var(--paper);
+  background-image:radial-gradient(ellipse at 50% 40%,rgba(255,255,255,.35),transparent 70%),radial-gradient(ellipse at 50% 120%,rgba(120,90,40,.07),transparent 60%)}
+.book.real .pg.l{background-image:linear-gradient(to left,rgba(60,40,15,.22),rgba(60,40,15,.07) 4%,transparent 12%),linear-gradient(to right,rgba(60,40,15,.06),transparent 3%),radial-gradient(ellipse at 50% 40%,rgba(255,255,255,.35),transparent 70%)}
+.book.real .pg.r{background-image:linear-gradient(to right,rgba(60,40,15,.22),rgba(60,40,15,.07) 4%,transparent 12%),linear-gradient(to left,rgba(60,40,15,.06),transparent 3%),radial-gradient(ellipse at 50% 40%,rgba(255,255,255,.35),transparent 70%)}
+.book.real .pg.s{background-image:linear-gradient(to right,rgba(60,40,15,.16),rgba(60,40,15,.05) 3%,transparent 9%),linear-gradient(to left,rgba(60,40,15,.06),transparent 3%)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .book.real .edge{background:repeating-linear-gradient(90deg,#3a342a 0 1px,#25211b 1px 2px)}}
+:root[data-theme="dark"] .book.real .edge{background:repeating-linear-gradient(90deg,#3a342a 0 1px,#25211b 1px 2px)}
 </style>
 
 </head>
@@ -222,6 +243,7 @@ body.focus .bnav{gap:8px;flex-wrap:wrap;justify-content:center}
   </defs>
 </svg>
 
+<script src="vendor/page-flip.browser.js"></script>
 <script>
 (function(){
 "use strict";
@@ -398,7 +420,9 @@ const pHTML=(pt,txt,cont)=>`<p class="${pt.cls}${cont?" cont":""}"${pt.lang?` la
 function hadithHTML(r,b){const h=hadithParts(r,b);if(h.sub)return `<h3 class="subh" lang="ar" data-n="${h.n}">${esc(h.parts[0].text)}</h3>`;return `<article class="h" data-n="${h.n}">${h.hn}${h.parts.map(pt=>pHTML(pt,pt.text)).join("")}</article>`}
 
 /* ---------- reader ---------- */
+function killFlip(){if(S.pf){try{S.pf.destroy()}catch(e){}S.pf=null}}
 async function renderRead(bid,sk,anchorN){
+  killFlip();
   const b=findBook(bid); if(!b)return go("");
   const si=b.secs.findIndex(s=>s.k===String(sk)); if(si<0)return go("kitab-"+bid);
   const sec=b.secs[si];
@@ -530,6 +554,42 @@ async function renderRead(bid,sk,anchorN){
   let p=0;
   if(keepAnchor){const pi=pages.findIndex(pg=>pg.n.includes(anchorN));if(pi>=0)p=pi-(pi%step)}
   const pageHTML=(i,cls)=>{const mk=getMarks()[bid];return pages[i]?`<div class="pg ${cls}">${mk&&mk.s===sec.k&&pages[i].n.includes(mk.n)?'<span class="ribbon"></span>':""}${pages[i].h}<div class="folio">${fmt(i+1)}</div></div>`:`<div class="pg ${cls}"></div>`};
+
+  const reduceM=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if(window.St&&!reduceM){
+    // realistic page-curl book (StPageFlip, MIT)
+    if(spread&&pages.length%2)pages.push({h:"",n:[]});
+    const hasRib=i=>{const mk=getMarks()[bid];return !!(mk&&mk.s===sec.k&&pages[i].n.includes(mk.n))};
+    book.classList.add("real");book.style.width=(pw*cols)+"px";
+    book.innerHTML=`<div class="edge le"></div><div class="edge re"></div><div class="flipbook" style="width:${pw*cols}px;height:${bh}px"></div>`;
+    const fb=book.querySelector(".flipbook");
+    const els=pages.map((pg,i)=>{const d=document.createElement("div");d.className="pg "+(spread?(i%2?"r":"l"):"s");
+      d.innerHTML=(hasRib(i)?'<span class="ribbon"></span>':"")+pg.h+(pg.h?`<div class="folio">${fmt(i+1)}</div>`:"");fb.appendChild(d);return d});
+    const pf=new St.PageFlip(fb,{width:pw,height:bh,size:"fixed",autoSize:false,showCover:false,usePortrait:!spread,
+      drawShadow:true,maxShadowOpacity:.6,flippingTime:900,mobileScrollSupport:true,showPageCorners:true,
+      startPage:p,useMouseEvents:true,clickEventForward:true,swipeDistance:30,startZIndex:1});
+    S.pf=pf;
+    pf.loadFromHTML(els);
+    const info=()=>{
+      p=pf.getCurrentPageIndex();if(spread)p-=p%2;
+      document.getElementById("pinfo").textContent=`${t("page")} ${fmt(p+1)}${spread&&pages[p+1]&&pages[p+1].h?"–"+fmt(p+2):""} ${t("of")} ${fmt(pages.filter(x=>x.h).length)}`;
+      document.getElementById("pprev").disabled=p===0&&!prevS;
+      document.getElementById("pnext").disabled=p+step>=pages.length&&!nextS;
+      const first=pages[p].n.find(x=>x!=null);if(first!=null)saveLast(first);
+      S.view={type:"book",first,ns:[...pages[p].n,...(spread&&pages[p+1]?pages[p+1].n:[])],
+        redraw:()=>els.forEach((el,i)=>{const r=el.querySelector(".ribbon"),on=hasRib(i);if(on&&!r)el.insertAdjacentHTML("afterbegin",'<span class="ribbon"></span>');if(!on&&r)r.remove()})};
+      syncMark();
+    };
+    pf.on("flip",info);
+    info();
+    const flipTo=dir=>{const i=p;
+      if(dir>0){if(i+step>=pages.length){if(nextS)go(`read-${bid}-${enc(nextS.k)}`);return}pf.flipNext("bottom")}
+      else if(dir<0){if(i===0){if(prevS)go(`read-${bid}-${enc(prevS.k)}`);return}pf.flipPrev("bottom")}};
+    document.getElementById("pprev").onclick=()=>flipTo(-1);
+    document.getElementById("pnext").onclick=()=>flipTo(1);
+    document.onkeydown=e=>{if(route().v!=="read"||e.target.closest("input,select"))return;if(e.key==="f")window.__setFocus(!S.focus);if(e.key==="Escape"&&S.focus)window.__setFocus(false);if(S.mode!=="book")return;if(e.key==="ArrowRight")flipTo(1);if(e.key==="ArrowLeft")flipTo(-1)};
+    return;
+  }
   function draw(){
     book.innerHTML=spread?pageHTML(p,"l")+pageHTML(p+1,"r"):pageHTML(p,"s");
     document.getElementById("pinfo").textContent=`${t("page")} ${fmt(p+1)}${spread&&pages[p+1]?"–"+fmt(p+2):""} ${t("of")} ${fmt(pages.length)}`;
@@ -592,6 +652,7 @@ function currentAnchor(){
 /* ---------- main render ---------- */
 let rsz;window.addEventListener("resize",()=>{clearTimeout(rsz);rsz=setTimeout(()=>{const r=route();if(r.v==="read"&&S.mode==="book")renderRead(r.b,r.s,currentAnchor())},300)});
 async function render(){
+  killFlip();
   setLangClass();
   try{await loadIndex()}catch(e){app.innerHTML=`<div class="loading">${esc(t("err"))}</div>`;return}
   const r=route();
