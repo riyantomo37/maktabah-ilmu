@@ -249,6 +249,21 @@ body.focus .bnav{gap:8px;flex-wrap:wrap;justify-content:center}
 .smore{margin:6px 0 0}
 .bsearch{display:flex;gap:8px;margin-top:4px}
 .bsearch input{flex:1}
+
+/* ---- compact book pages on phones: more text per page ---- */
+.book.compact .pg p{margin-top:0}
+.book.compact .pg .ar{line-height:1.72;margin-bottom:.3em}
+.book.compact .pg .tr{line-height:1.55;margin-bottom:.3em}
+.book.compact .pg p:has(.inum){margin-top:.6em}
+.book.compact .inum{display:inline-block;font-family:var(--f-display);color:var(--gold);font-size:.7em;font-weight:600;margin-inline-end:.45em;vertical-align:.15em;font-variant-numeric:tabular-nums;direction:ltr;unicode-bidi:isolate}
+.book.compact .pg .chap-head{padding-block:0 6px;gap:2px}
+.book.compact .pg .chap-head h2{font-size:calc(var(--fsb) * 1.22)}
+.book.compact .pg .chap-head .k{font-size:.6rem}
+.book.compact .pg .chap-head p{font-size:.7rem}
+.book.compact .fallback{display:none}
+.book.compact .pg .bism{margin:2px 0 4px}
+.book.compact .pg .sub{margin:10px 0 4px}
+.book.compact .pg .folio{bottom:5px;font-size:.66rem}
 </style>
 
 </head>
@@ -325,7 +340,7 @@ const RIB_O='<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h8v13l-4
 const RIB_F='<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 1.5h8v13l-4-3-4 3z" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
 /* ---------- state ---------- */
 const store={get(k,d){try{const v=localStorage.getItem("mk:"+k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem("mk:"+k,JSON.stringify(v))}catch(e){}}};
-const S={lang:store.get("lang","id"),mode:store.get("mode","book"),showAr:store.get("showAr",true),fs:store.get("fs",1.06),layout:store.get("layout","auto"),fit:store.get("fit","book"),index:null,chunks:{},view:null};
+const S={lang:store.get("lang","id"),mode:store.get("mode","book"),showAr:store.get("showAr",true),fs:store.get("fs",1.06),layout:store.get("layout","auto"),fit:store.get("fit",null),index:null,chunks:{},view:null};
 const app=document.getElementById("app");
 const getMarks=()=>store.get("marks",{});
 function setMark(bid,v){const m=getMarks();if(v)m[bid]=v;else delete m[bid];store.set("marks",m)}
@@ -442,9 +457,9 @@ function hadithParts(r,b){
   if(r[8]){const L=r[8]===2;return {n,sub:1,hn:"",parts:[{cls:L?"sub ltr":"sub",lang:L?"en":"ar",text:L?en:ar}]}}
   const label=kind==="hadith"||kind==="prose"?(Number.isInteger(n)?fmt(n):"·"):`${S.curSec}:${fmt(n)}${nEnd?"–"+fmt(nEnd):""}`;
   const hn=`<div class="hn" data-n="${n}"><span class="num">${label}</span>${g?`<span class="grade" title="${esc(g)}">${esc(g.split("; ")[0])}</span>`:""}</div>`;
-  return {n,hn,parts};
+  return {n,hn,parts,label};
 }
-const pHTML=(pt,txt,cont)=>`<p class="${pt.cls}${cont?" cont":""}"${pt.lang?` lang="${pt.lang}"`:""}>${esc(txt)}</p>`;
+const pHTML=(pt,txt,cont)=>`<p class="${pt.cls}${cont?" cont":""}"${pt.lang?` lang="${pt.lang}"`:""}>${pt.num&&!cont?`<span class="inum">${esc(pt.num)}</span>`:""}${esc(txt)}</p>`;
 function hadithHTML(r,b){const h=hadithParts(r,b);if(h.sub)return `<h3 class="subh${h.parts[0].lang==="en"?" ltr":""}" lang="${h.parts[0].lang}" data-n="${h.n}">${esc(h.parts[0].text)}</h3>`;return `<article class="h" data-n="${h.n}">${h.hn}${h.parts.map(pt=>pHTML(pt,pt.text)).join("")}</article>`}
 
 /* ---------- reader ---------- */
@@ -470,7 +485,7 @@ async function renderRead(bid,sk,anchorN){
       ${S.lang!=="ar"?`<label class="chk"><input type="checkbox" id="showar"${S.showAr?" checked":""}>${esc(t("arabic"))}</label>`:""}
       <div class="seg" aria-label="${esc(t("size"))}"><button id="fsm" aria-label="smaller">A−</button><button id="fsp" aria-label="larger">A+</button></div>
       ${S.mode==="book"?`<div class="seg" role="group" aria-label="${esc(t("pages"))}">${["auto","single","double"].map(k=>`<button data-layout="${k}" aria-pressed="${S.layout===k}">${esc(t(k))}</button>`).join("")}</div>
-      <div class="seg" role="group">${[["book","fitBook"],["fill","fitFill"]].map(([k,l])=>`<button data-fit="${k}" aria-pressed="${S.fit===k}">${esc(t(l))}</button>`).join("")}</div>`:""}
+      <div class="seg" role="group">${[["book","fitBook"],["fill","fitFill"]].map(([k,l])=>`<button data-fit="${k}" aria-pressed="${(S.fit||(Math.min(innerWidth,innerHeight)<600?"fill":"book"))===k}">${esc(t(l))}</button>`).join("")}</div>`:""}
   </div>
   ${S.focus&&S.mode!=="book"?`<div class="fexit"><button class="iconbtn markbtn" aria-label="${esc(t("mark"))}">${RIB_O}</button><button class="iconbtn" id="focusexit" aria-label="${esc(t("exitFocus"))}" title="${esc(t("exitFocus"))}">✕</button></div>`:""}
   <main id="rmain"><div class="loading">${esc(t("loading"))}</div></main>`;
@@ -533,16 +548,18 @@ async function renderRead(bid,sk,anchorN){
   const availW=window.innerWidth-(S.focus?12:Math.max(32,window.innerWidth*.04));
   const availH=Math.max(320,window.innerHeight-topH-(S.focus?56:76));
   const RATIO=0.68; // page width / height, like a printed book
+  const compact=Math.min(innerWidth,innerHeight)<600; // phones: denser pages
+  const fit=S.fit||(compact?"fill":"book");
   const spread=S.layout==="double"?true:S.layout==="single"?false:(availW/availH>1.05&&availW>=640);
   const cols=spread?2:1;
   let pw,bh;
-  if(S.fit==="book"){bh=Math.min(availH,(availW/cols)/RATIO);pw=Math.min(availW/cols,bh*RATIO)}else{bh=availH;pw=availW/cols}
+  if(fit==="book"){bh=Math.min(availH,(availW/cols)/RATIO);pw=Math.min(availW/cols,bh*RATIO)}else{bh=availH;pw=availW/cols}
   pw=Math.floor(pw);bh=Math.floor(bh);
   // type proportional to the page: about 45-50 characters per line, user A-/A+ scales it
-  const padX=Math.round(pw*(spread||pw<600?0.085:0.07)), padT=Math.round(bh*0.06), padB=Math.round(bh*0.075)+10;
-  const fsb=Math.max(14,Math.min(30,(pw-padX*2)/23*(S.fs/1.06)));
+  const padX=compact?Math.round(pw*0.055):Math.round(pw*(spread||pw<600?0.085:0.07)), padT=compact?Math.round(Math.min(bh*0.035,16)):Math.round(bh*0.06), padB=compact?24:Math.round(bh*0.075)+10;
+  const fsb=Math.max(compact?15:14,Math.min(30,(pw-padX*2)/23*(S.fs/1.06)));
   const bookStyle=`--bh:${bh}px;width:${pw*cols}px;--px:${padX}px;--pt:${padT}px;--pb:${padB}px;--fsb:${fsb.toFixed(2)}px`;
-  main.innerHTML=`<div class="bookstage"><div class="book${spread?" spread":""} sized" id="book" style="${bookStyle}"></div>
+  main.innerHTML=`<div class="bookstage"><div class="book${spread?" spread":""}${compact?" compact":""} sized" id="book" style="${bookStyle}"></div>
     <div class="bnav"><button class="iconbtn" id="pprev" aria-label="${esc(t("prev"))}">‹</button><span id="pinfo"></span><button class="iconbtn" id="pnext" aria-label="${esc(t("next"))}">›</button><a class="chip tomark" id="tomark" hidden></a>${S.focus?`<button class="iconbtn" id="fset" aria-label="${esc(t("settings"))}">Aa</button><button class="iconbtn markbtn" aria-label="${esc(t("mark"))}">${RIB_O}</button><button class="iconbtn" id="focusexit2" aria-label="${esc(t("exitFocus"))}">✕</button>`:""}</div></div>${pagerHTML}`;
   if(S.focus){document.getElementById("fset").onclick=togglePanel;document.getElementById("focusexit2").onclick=()=>window.__setFocus(false);document.querySelectorAll(".bnav .markbtn").forEach(x=>x.onclick=()=>toggleMark())}
   const book=document.getElementById("book");
@@ -558,8 +575,9 @@ async function renderRead(bid,sk,anchorN){
   add(head,null);
   for(const r of rows){
     const h=hadithParts(r,b);
-    add(h.hn,h.n);
-    if(over()&&cur.length>1){undo();newPage();add(h.hn,h.n)}
+    if(compact&&!h.sub&&h.parts.length){if(h.label&&h.label!=="·")h.parts[0]={...h.parts[0],num:h.label};h.hn=""}
+    if(h.hn){add(h.hn,h.n);
+    if(over()&&cur.length>1){undo();newPage();add(h.hn,h.n)}}
     for(const pt of h.parts){
       let text=pt.text,cont=false;
       while(text){
