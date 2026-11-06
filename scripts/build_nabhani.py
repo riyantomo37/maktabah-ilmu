@@ -131,8 +131,10 @@ def extract(path, lang):
     for pg in d:
         H = pg.rect.height
         lines = []
-        for b in pg.get_text('dict', flags=pymupdf.TEXT_PRESERVE_WHITESPACE)['blocks']:
-            if b.get('type') != 0: continue
+        blocks = [b for b in pg.get_text('dict', flags=pymupdf.TEXT_PRESERVE_WHITESPACE)['blocks'] if b.get('type') == 0]
+        # urutan baca atas->bawah: di PDF judul bab sering disimpan SETELAH paragraf pembukanya
+        blocks.sort(key=lambda b: (round(b['bbox'][1] / 4), b['bbox'][0]))
+        for b in blocks:
             bl = []
             for l in b['lines']:
                 sp = l['spans']
@@ -171,6 +173,8 @@ def extract(path, lang):
             keep = []
             for ln in bl:
                 if (is_running(ln['t']) and len(ln['t']) < 160) or edge_of(ln) and (is_running(ln['t']) or re.fullmatch(r'[\W\d_ivxlcIVXLC]{1,8}', ln['t'])): continue
+                # kepala/kaki halaman berhuruf kecil (judul bab di atas halaman, nomor halaman)
+                if edge_of(ln) and ln['size'] < body * 0.85 and len(ln['t']) < 90: continue
                 keep.append(ln)
             if not keep: continue
             text = ''
@@ -198,7 +202,14 @@ def extract(path, lang):
     items = [it for it in out if not (it[0] == 'h' and len(norm_key(it[1])) < 2)]
     dedup = []
     for it in items:
-        hit = next((x for x in dedup[-3:] if x[1][:60] == it[1][:60]), None)
+        a = norm_key(it[1])
+        def same(x):
+            # lapisan teks ganda / huruf awal besar ganda: teks pendek termuat UTUH dalam teks panjang
+            if x[1][:60] == it[1][:60]: return True
+            if x[0] != 'p' or it[0] != 'p': return False
+            b = norm_key(x[1]); sh, lo = sorted((a, b), key=len)
+            return len(sh) >= 8 and sh[2:] in lo
+        hit = next((x for x in dedup[-8:] if same(x)), None)  # lapisan teks ganda di PDF
         if hit is not None:
             if len(it[1]) > len(hit[1]): hit[1] = it[1]
             continue
