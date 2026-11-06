@@ -10,8 +10,23 @@ Kitab yang mendapat terjemah ini diberi "mt": [kode bahasa] sehingga situs menam
 "terjemah AI, belum ditinjau ahli". Terjemah dibuat oleh Claude (Anthropic) dari teks Arab.
 Jalankan ulang setelah build_openiti.py / build.py membangun ulang data.
 """
-import glob, json, os, re, sys
+import glob, json, os, re, sys, time
 from collections import defaultdict
+
+
+def save_json(obj, path):
+    """Tulis atomik (tmp lalu replace) dengan percobaan ulang; di Windows file bisa terkunci sesaat."""
+    tmp = path + '.tmp'
+    for attempt in range(8):
+        try:
+            with open(tmp, 'w', encoding='utf-8') as f:
+                json.dump(obj, f, ensure_ascii=False, separators=(',', ':'))
+            os.replace(tmp, path)
+            return
+        except OSError:
+            if attempt == 7:
+                raise
+            time.sleep(0.5 * (attempt + 1))
 
 D = sys.argv[1]
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -48,7 +63,7 @@ for bid in sorted(set(tr) | set(secs)):
                         r[col] = v[k]; used.add(code); hit = True
                 if hit: count += 1; changed = True
         if changed:
-            json.dump(chunk, open(p, 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
+            save_json(chunk, p)
     for s in b['secs']:
         st = secs.get(bid, {}).get(s['k'])
         if st:
@@ -63,4 +78,4 @@ for bid in sorted(set(tr) | set(secs)):
     b['mtDone'] = count if count < total else None
     if b['mtDone'] is None: b.pop('mtDone')
     print(f'{bid:16} {count}/{total} baris, judul bab: {len(secs.get(bid, {}))}, mt={b.get("mt")}')
-json.dump(idx, open(f'{D}/index.json', 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
+save_json(idx, f'{D}/index.json')
