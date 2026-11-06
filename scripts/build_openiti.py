@@ -104,6 +104,48 @@ BOOKS = [
    M('Madarij as-Salikin', 'مدارج السالكين', 'Ibn al-Qayyim', 'ابن قيم الجوزية', 751, 'tazkiyah'), {}),
  ('wabil', '0751IbnQayyimJawziyya.WabilSayyib.Shamela0000216-ara1',
    M('Al-Wabil as-Sayyib', 'الوابل الصيب من الكلم الطيب', 'Ibn al-Qayyim', 'ابن قيم الجوزية', 751, 'tazkiyah'), {}),
+ # --- Rak Fikih & Ushul Fikih ---
+ ('fiqhakbar', '0150AbuHanifa.FiqhAkbar.JK001085-ara1.mARkdown',
+   M('Al-Fiqh al-Akbar', 'الفقه الأكبر', 'Imam Abu Hanifah', 'الإمام أبو حنيفة النعمان', 150, 'fiqh', note='attr'), {}),
+ ('musnadabuhanifah', '0150AbuHanifa.Musnad.Shamela0029120-ara1',
+   M('Musnad Abi Hanifah', 'مسند الإمام أبي حنيفة', 'Imam Abu Hanifah', 'الإمام أبو حنيفة النعمان', 150, 'fiqh'), {}),
+ ('atsarabuyusuf', '0182AbuYusufYacqub.Athar.Shamela0012987-ara1.mARkdown',
+   M("Kitab al-Atsar (riwayah Abi Yusuf)", 'كتاب الآثار برواية أبي يوسف', 'Abu Yusuf', 'القاضي أبو يوسف', 182, 'fiqh'), {}),
+ ('kharaj', '0182AbuYusufYacqub.Kharaj.Shamela0026333-ara1',
+   M('Kitab al-Kharaj', 'كتاب الخراج', 'Abu Yusuf', 'القاضي أبو يوسف', 182, 'fiqh'), {}),
+ ('atsarsyaibani', '0189MuhammadShaybani.Athar.JK011277-ara1',
+   M("Kitab al-Atsar (riwayah asy-Syaibani)", 'كتاب الآثار برواية محمد بن الحسن', 'Muhammad asy-Syaibani', 'محمد بن الحسن الشيباني', 189, 'fiqh'), {}),
+ ('jamisaghir', '0189MuhammadShaybani.JamicSaghir.Shamela0006160-ara1.mARkdown',
+   M("Al-Jami' ash-Shaghir", 'الجامع الصغير', 'Muhammad asy-Syaibani', 'محمد بن الحسن الشيباني', 189, 'fiqh'), {}),
+ ('siyarsyaibani', '0189MuhammadShaybani.Siyar.Shamela0007231-ara1',
+   M('As-Siyar', 'السير', 'Muhammad asy-Syaibani', 'محمد بن الحسن الشيباني', 189, 'fiqh'), {}),
+ ('mudawwanah', '0240SahnunIbnSacid.MudawwanaKubra.Shamela0000587-ara1',
+   M('Al-Mudawwanah al-Kubra', 'المدونة الكبرى', "Sahnun (riwayah Imam Malik)", 'سحنون بن سعيد (عن الإمام مالك)', 240, 'fiqh'), {}),
+ ('risalahqairawani', '0386IbnAbiZaydQayrawani.Risala.Shamela0011373-ara1',
+   M('Ar-Risalah (al-Qairawani)', 'الرسالة', 'Ibn Abi Zaid al-Qairawani', 'ابن أبي زيد القيرواني', 386, 'fiqh'), {}),
+ ('bidayatulmujtahid', '0595IbnRushdHafid.BidayatMujtahid.Shamela0021739-ara1',
+   M('Bidayat al-Mujtahid', 'بداية المجتهد ونهاية المقتصد', 'Ibn Rushd', 'ابن رشد الحفيد', 595, 'fiqh'), {}),
+ ('muwafaqat', '0790IbnMusaGharnatiShatibi.Muwafaqat.JK000279-ara1',
+   M('Al-Muwafaqat', 'الموافقات', 'Asy-Syathibi', 'أبو إسحاق الشاطبي', 790, 'fiqh'), {}),
+ ('risalahsyafii', '0204Shafici.Risala.JK000143-ara1',
+   M('Ar-Risalah (asy-Syafi\'i)', 'الرسالة', "Imam asy-Syafi'i", 'الإمام الشافعي', 204, 'fiqh'), {}),
+ ('umm', '0204Shafici.Umm.Shamela0001655-ara1',
+   M('Al-Umm', 'الأم', "Imam asy-Syafi'i", 'الإمام الشافعي', 204, 'fiqh'), {}),
+ ('ikhtilafhadits', '0204Shafici.IkhtilafHadith.Shamela0009348-ara1',
+   M('Ikhtilaf al-Hadits', 'اختلاف الحديث', "Imam asy-Syafi'i", 'الإمام الشافعي', 204, 'fiqh'), {}),
+ ('musnadsyafii', '0204Shafici.Musnad.JK000494-ara1',
+   M("Musnad asy-Syafi'i", 'مسند الشافعي', "Imam asy-Syafi'i", 'الإمام الشافعي', 204, 'fiqh'), {}),
+ ('diwansyafii', '0204Shafici.Diwan.ShamAY0037917-ara1',
+   M("Diwan asy-Syafi'i", 'ديوان الشافعي', "Imam asy-Syafi'i", 'الإمام الشافعي', 204, 'fiqh'), {}),
+ # --- Rak Sejarah (tambahan) ---
+ ('tarikhthabari', '0310Tabari.Tarikh.Shamela0009783BK1-ara1.mARkdown',
+   M('Tarikh ar-Rusul wal-Muluk (Tarikh ath-Thabari)', 'تاريخ الرسل والملوك', 'Ath-Thabari', 'محمد بن جرير الطبري', 310, 'tarikh'), {}),
+ ('kamil', '0630IbnAthirCizzDin.Kamil.JK000911-ara1.mARkdown',
+   M("Al-Kamil fit-Tarikh", 'الكامل في التاريخ', 'Ibnul Atsir', 'عز الدين ابن الأثير', 630, 'tarikh'), {}),
+ ('jabarti', '1237Jabarti.CajaibAthar.JK000394-ara1.completed',
+   M("'Aja'ib al-Atsar", 'عجائب الآثار في التراجم والأخبار', 'Al-Jabarti', 'عبد الرحمن الجبرتي', 1240, 'tarikh'), {}),
+ ('faridbek', '1338MuhammadFaridBey.Tarikh.Shamela0006638-ara1.completed',
+   M("Tarikh ad-Daulah al-'Aliyyah al-'Utsmaniyyah", 'تاريخ الدولة العلية العثمانية', 'Muhammad Farid Bek', 'محمد فريد بك المحامي', 1338, 'tarikh'), {}),
 ]
 
 NOISE = re.compile(r'PageV\d+P\d+|\bms\d+\b|#~:\w+:|@\w+@|\bAUTO\b')
@@ -154,6 +196,12 @@ def pick_level(items):
         best = L
         if n >= 8 and total / max(n, 1) <= 60_000: break
     return best
+
+def edition(fname):
+    head = open(os.path.join(SRC, fname), encoding='utf-8').read(20000)
+    g = lambda k: (re.search(r'#META# ' + k + r'\s*:: (.+)', head) or [None, ''])[1].strip()
+    parts = [x for x in (g('040.EdEDITOR'), g('043.EdPUBLISHER'), g('041.EdNUMBER'), g('045.EdYEAR')) if x and x != 'NODATA']
+    return (' — ط. ' + '، '.join(parts)) if parts else ''
 
 def build(bid, fname, meta, opt):
     items = parse(os.path.join(SRC, fname), opt.get('until'))
@@ -240,7 +288,7 @@ def build(bid, fname, meta, opt):
         entries.append({'k': k, 't': title, 'ta': '', 'c': len(body), 'f': body[0][0], 'l': body[-1][0], 'ch': ci})
     flush()
     e = dict(meta); e.update(id=bid, secs=entries, total=sum(s['c'] for s in entries), chunks=ci,
-                             src=f'OpenITI: {fname} (CC BY-NC-SA 4.0)')
+                             src=f'OpenITI: {fname}{edition(fname)} (CC BY-NC-SA 4.0)')
     print(f'{bid:14} level={L} secs={len(entries):5} chunks={ci:3} texts={e["total"]}')
     return e
 
