@@ -63,6 +63,8 @@ Alternatif tanpa Git: **Cloudflare Pages** atau **Netlify** (seret folder ini ke
 | Terjemah Inggris: The Confessions of Al Ghazzali & The Alchemy of Happiness (Claud Field), Hayy ibn Yaqzan (Simon Ockley, 1708) | Wikisource & Project Gutenberg (domain publik); dibangun dengan `scripts/build_translations.py` |
 | Karya Syekh Taqiyuddin an-Nabhani (24 kitab Arab; terjemah Inggris 10, Indonesia 6) | PDF Arab & terjemah Inggris resmi dari [hizb-ut-tahrir.org](http://www.hizb-ut-tahrir.org/index.php/AR/books) (penerbit mengizinkan penerbitan ulang tanpa diubah dengan menyebut sumber); terjemah Indonesia HTI-Press via archive.org; dibangun dengan `scripts/build_nabhani.py` |
 
+Sampul sebagian kitab diambil dari scan cetakan lama yang sudah domain publik (terbit sebelum 1929) di Internet Archive (`scripts/build_covers.py`, sumber tercatat di `coverSrc`); sampul kitab an-Nabhani dari halaman pertama PDF resminya; kitab lain memakai sampul jilid kulit buatan situs.
+
 Mode Buku memakai [StPageFlip](https://github.com/Nodlik/StPageFlip) (MIT, `vendor/`) untuk efek halaman melengkung.
 
 Teks Arab kitab klasik adalah warisan bersama. Sebagian terjemah masih milik penerjemahnya, jadi website ini sebaiknya tetap gratis dan non-komersial, dengan sumber tetap dicantumkan.
