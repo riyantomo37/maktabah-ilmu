@@ -33,7 +33,7 @@ self.addEventListener('fetch', e => {
     }).catch(() => caches.match('index.html')));
     return;
   }
-  if (/\/(d|s|icons|vendor)\//.test(url.pathname) || url.pathname.endsWith('.webmanifest')) {
+  if (/\/(d|s|icons|vendor|covers)\//.test(url.pathname) || url.pathname.endsWith('.webmanifest')) {
     e.respondWith(caches.open(DATA).then(async c => {
       const hit = await c.match(req);
       const net = fetch(req).then(res => { if (res.ok) c.put(req, res.clone()); return res; }).catch(() => hit);
