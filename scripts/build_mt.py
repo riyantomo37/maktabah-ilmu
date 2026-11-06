@@ -37,7 +37,10 @@ for bid in sorted(set(tr) | set(secs)):
         for rows in chunk.values():
             for r in rows:
                 v = items.get(str(r[0]))
-                if not v or (len(r) > 8 and r[8]): continue
+                if len(r) > 8 and r[8]: continue
+                if str(r[0]) in items and not re.sub(r'<[^>]*>|\W', '', r[1] or ''):
+                    count += 1; continue  # baris kosong/markup saja: dihitung selesai
+                if not v: continue
                 while len(r) < 6: r.append('')
                 hit = False
                 for k, (col, code) in COL.items():
