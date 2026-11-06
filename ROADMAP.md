@@ -71,7 +71,7 @@ Urutkan di rak sesuai zaman yang diliput:
 - [x] *'Aja'ib al-Atsar*, al-Jabarti (w. 1240 H): Mesir masa Utsmani hingga Muhammad Ali.
 - [x] *Tarikh ad-Daulah al-'Aliyyah al-'Utsmaniyyah*, Muhammad Farid Bek (w. 1338 H / 1919 M).
 - (Sudah ada: Muqaddimah, Al-'Ibar II, Al-'Ibar III, At-Ta'rif karya Ibnu Khaldun.)
-- [ ] Tambahan: halaman/garis waktu "Zaman-zaman Islam" yang menautkan setiap era ke kitab dan bab yang membahasnya: Nabi ﷺ, Khulafaur Rasyidin, Umayyah, Abbasiyah, Andalusia, Fathimiyah, Ayyubiyah, Mamluk, Utsmani, runtuhnya khilafah 1924, dan zaman modern.
+- [x] Tambahan: halaman/garis waktu "Zaman-zaman Islam" yang menautkan setiap era ke kitab dan bab yang membahasnya: Nabi ﷺ, Khulafaur Rasyidin, Umayyah, Abbasiyah, Andalusia, Fathimiyah, Ayyubiyah, Mamluk, Utsmani, runtuhnya khilafah 1924, dan zaman modern.
 
 ## Tahap 4: Rak "Bacaan Kontemporer" (ringkasan + tautan, BUKAN teks lengkap)
 
@@ -116,7 +116,7 @@ Sirah & sejarah modern:
 
 - [x] Pencarian teks: indeks per kitab yang hanya dimuat saat dibutuhkan, dengan pencarian Arab tanpa harakat.
 - [x] PWA: bisa dipasang di HP dan dibaca offline (service worker + cache data kitab yang pernah dibuka).
-- [ ] Garis waktu sejarah interaktif (lihat Tahap 3).
+- [x] Garis waktu sejarah interaktif (lihat Tahap 3).
 - [ ] Catatan/sorotan pribadi di samping pembatas buku.
 - [ ] Domain sendiri lewat Cloudflare (opsional).
 
