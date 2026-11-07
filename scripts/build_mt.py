@@ -53,7 +53,7 @@ for bid in sorted(set(tr) | set(secs)):
             for r in rows:
                 v = items.get(str(r[0]))
                 if len(r) > 8 and r[8]: continue
-                if str(r[0]) in items and not re.sub(r'<[^>]*>|\W', '', r[1] or ''):
+                if str(r[0]) in items and not re.sub(r'<[^>]*>|\W', '', (r[1] or '') + (r[2] if b.get('mtFrom') == 'eng' else '')):
                     count += 1; continue  # baris kosong/markup saja: dihitung selesai
                 if not v: continue
                 while len(r) < 6: r.append('')

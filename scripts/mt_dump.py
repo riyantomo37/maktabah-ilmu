@@ -1,4 +1,4 @@
-"""Tampilkan teks Arab kitab untuk diterjemahkan:  python scripts/mt_dump.py d <kitab> [dari] [jumlah]"""
+"""Tampilkan teks sumber (Arab, atau Inggris bila Arab kosong) kitab untuk diterjemahkan:  python scripts/mt_dump.py d <kitab> [dari] [jumlah]"""
 import json, sys
 D, bid = sys.argv[1], sys.argv[2]
 start = int(sys.argv[3]) if len(sys.argv) > 3 else 0
@@ -12,5 +12,5 @@ for c in range(b['chunks']):
             if len(r) > 8 and r[8]: continue
             if start <= i < start + cnt:
                 if r is rows[0] or (i == start): print(f'## [{k}] {titles.get(k, "")}')
-                print(f'{r[0]}| {r[1]}')
+                print(f'{r[0]}| {r[1] or r[2]}')
             i += 1
