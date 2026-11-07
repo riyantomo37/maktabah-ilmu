@@ -60,6 +60,7 @@ def tafsir_book(bid,meta,langs):
       if r[7] is None: r.pop()
     secs.append((str(ch),f"{c['name']} · {c['englishname']}",c['arabicname'],rows))
   emit(bid,meta,secs)
+# Terjemah Indonesia Jalalain ditambahkan sesudahnya dengan scripts/import_jalalayn_id.py (Tanzil id.jalalayn)
 tafsir_book('jalalayn',{'en':'Tafsir al-Jalalayn','ar':'تفسير الجلالين','auth':'Jalaluddin al-Mahalli & Jalaluddin as-Suyuthi','authar':'جلال الدين المحلي وجلال الدين السيوطي','died':911,'langs':['ara','eng'],'kind':'tafsir','cat':'quran','src':'spa5k/tafsir_api (Arabic; English tr. Feras Hamza)'},{'ar':'ar-tafsir-al-jalalayn','en':'en-al-jalalayn'})
 tafsir_book('mukhtasar',{'en':'Al-Mukhtasar fi Tafsir','ar':'المختصر في التفسير','auth':'Markaz Tafsir li ad-Dirasat al-Quraniyyah','authar':'مركز تفسير للدراسات القرآنية','died':None,'langs':['ara','eng','ind','jpn'],'kind':'tafsir','cat':'quran','src':'spa5k/tafsir_api'},{'ar':'ar-tafsir-al-mukhtasar','en':'en-tafsir-al-mukhtasar','id':'indonesian-mokhtasar','ja':'japanese-mokhtasar'})
 tafsir_book('saadi',{'en':"Tafsir as-Sa'di",'ar':'تيسير الكريم الرحمن','auth':"Abdurrahman bin Nashir as-Sa'di",'authar':'عبد الرحمن بن ناصر السعدي','died':1376,'langs':['ara','ind'],'kind':'tafsir','cat':'quran','src':'spa5k/tafsir_api'},{'ar':'ar-tafsir-as-saadi','id':'id-tafsir-as-saadi'})

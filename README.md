@@ -56,6 +56,7 @@ Alternatif tanpa Git: **Cloudflare Pages** atau **Netlify** (seret folder ini ke
 | Kutubus Sittah, Muwatta, Arba'in Nawawi, Hadits Qudsi | [fawazahmed0/hadith-api](https://github.com/fawazahmed0/hadith-api) (Unlicense) |
 | Al-Qur'an (Utsmani, Kemenag RI, Pickthall, Ryoichi Mita) | [fawazahmed0/quran-api](https://github.com/fawazahmed0/quran-api) |
 | Tafsir Ibnu Katsir, as-Sa'di, al-Jalalain, al-Mukhtashar | [spa5k/tafsir_api](https://github.com/spa5k/tafsir_api) |
+| Terjemah Indonesia Tafsir al-Jalalain | [Tanzil](https://tanzil.net/trans/) (`id.jalalayn`, non-komersial, teks tidak diubah); `scripts/import_jalalayn_id.py` |
 | Musnad Ahmad (sebagian), Sunan ad-Darimi | [gadingnst/hadith-api](https://github.com/gadingnst/hadith-api) |
 | Riyadhus Shalihin, Bulughul Maram, Al-Adab al-Mufrad, Syamail, Misykat | [AhmedBaset/hadith-json](https://github.com/AhmedBaset/hadith-json) |
 | Karya Imam Ahmad (Musnad lengkap, az-Zuhd, Ushul as-Sunnah), al-Ghazali (Ihya', Bidayatul Hidayah, al-Munqidz, Kimiya' as-Sa'adah, Misykat al-Anwar, Tahafut), Muqaddimah Ibnu Khaldun, Muruj adz-Dzahab, rihlah Ibnu Battutah, Ibnu Jubair, Ibnu Fadhlan, al-I'tibar, 'Aja'ib al-Hind, al-Idrisi, Hayy bin Yaqzhan, Ibnu Sina (al-Qanun, al-Isyarat, an-Najat) | [OpenITI](https://github.com/OpenITI) (CC BY-NC-SA 4.0), teks Arab; dibangun dengan `scripts/build_openiti.py` |
