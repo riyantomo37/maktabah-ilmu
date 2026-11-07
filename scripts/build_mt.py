@@ -53,7 +53,7 @@ for bid in sorted(set(tr) | set(secs)):
             for r in rows:
                 v = items.get(str(r[0]))
                 if len(r) > 8 and r[8]: continue
-                if str(r[0]) in items and not re.sub(r'<[^>]*>|\W', '', (r[1] or '') + (r[2] if b.get('mtFrom') == 'eng' else '')):
+                if str(r[0]) in items and not re.sub(r'<[^>]*>|\W', '', (r[1] or '') + (r[2] if (b.get('mtFrom') == 'eng' or 'ara' not in b['langs']) else '')):
                     count += 1; continue  # baris kosong/markup saja: dihitung selesai
                 if not v: continue
                 while len(r) < 6: r.append('')
@@ -69,6 +69,7 @@ for bid in sorted(set(tr) | set(secs)):
         if st:
             for k in ('id', 'en', 'ja'):
                 if st.get(k): s['t_' + k] = st[k]
+    if 'ara' not in b['langs'] and 'ind' in used: b['mtFrom'] = 'eng'
     new = used - set(b['langs'])
     b['mt'] = sorted(set(b.get('mt', [])) | new)
     b['langs'] = sorted(set(b['langs']) | used, key=['ara', 'eng', 'ind', 'jpn'].index)
