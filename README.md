@@ -49,6 +49,10 @@ git push -u origin main
 
 Alternatif tanpa Git: **Cloudflare Pages** atau **Netlify** (seret folder ini ke dashboard mereka).
 
+## Halaman per kitab & SEO
+
+`python -X utf8 scripts/build_pages.py` membuat `k/<kitab>.html` (judul, deskripsi, daftar isi, Open Graph, JSON-LD), `sitemap.xml`, dan `robots.txt`. Jalankan ulang setelah menambah kitab. Gambar pratinjau bersama: `og.png`.
+
 ## Sumber data
 
 | Kitab | Sumber |
