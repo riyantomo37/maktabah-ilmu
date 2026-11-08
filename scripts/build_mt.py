@@ -44,16 +44,20 @@ for bid in sorted(set(tr) | set(secs)):
     b = next((x for x in idx if x['id'] == bid), None)
     if b is None: print('tidak ada kitab', bid); continue
     items = tr.get(bid, {})
-    used, count = set(), 0
+    used, count, seen, qn = set(), 0, set(), defaultdict(int)
     for c in range(b['chunks']):
         p = f'{D}/{bid}-{c}.json'
         chunk = json.load(open(p, encoding='utf-8'))
         changed = False
-        for rows in chunk.values():
+        for sk, rows in chunk.items():
             for r in rows:
-                v = items.get(str(r[0]))
                 if len(r) > 8 and r[8]: continue
-                if str(r[0]) in items and not re.sub(r'<[^>]*>|\W', '', (r[1] or '') + (r[2] if (b.get('mtFrom') == 'eng' or 'ara' not in b['langs']) else '')):
+                # kunci "bab|baris" untuk nomor baris yang berulang; kunci polos hanya untuk kemunculan pertama
+                qk = f'{sk}|{r[0]}'; qn[qk] += 1
+                if qn[qk] > 1: qk += f'#{qn[qk]}'
+                first = str(r[0]) not in seen; seen.add(str(r[0]))
+                v = items.get(qk) or (items.get(str(r[0])) if first else None)
+                if (qk in items or (first and str(r[0]) in items)) and not re.sub(r'<[^>]*>|\W', '', (r[1] or '') + (r[2] if (b.get('mtFrom') == 'eng' or 'ara' not in b['langs']) else '')):
                     count += 1; continue  # baris kosong/markup saja: dihitung selesai
                 if not v: continue
                 while len(r) < 6: r.append('')
