@@ -184,6 +184,13 @@ BOOKS = [
    M("Mi'yar al-'Ilm (Mantiq)", 'معيار العلم في فن المنطق', 'Imam al-Ghazali', 'الإمام أبو حامد الغزالي', 505, 'alat'), {}),
  ('mihakk', '0505Ghazali.MahkNazar.Shamela0026538-ara1',
    M('Mihakk an-Nazhar (Mantiq)', 'محك النظر في المنطق', 'Imam al-Ghazali', 'الإمام أبو حامد الغزالي', 505, 'alat'), {}),
+ # --- tambahan 2026-11-08 ---
+ ('umdatulqari', '0855BadrDinCayni.CumdatQari.Shamela0005756-ara1',
+   M("'Umdat al-Qari", 'عمدة القاري شرح صحيح البخاري', "Badruddin al-'Aini", 'بدر الدين العيني', 855, 'hadith'), {}),
+ ('umdatulahkam', '0600CabdGhaniMaqdisi.CumdatAhkam.Sham19Y0011194-ara1',
+   M("'Umdat al-Ahkam al-Kubra", 'عمدة الأحكام الكبرى', "'Abdul Ghani al-Maqdisi", 'عبد الغني المقدسي', 600, 'hadith', 'hadith'), {'hadith': True}),
+ ('fashlulmaqal', '0595IbnRushdHafid.FaslMaqal.JK010686-ara1',
+   M("Fashl al-Maqal", 'فصل المقال فيما بين الحكمة والشريعة من الاتصال', 'Ibn Rushd', 'ابن رشد الحفيد', 595, 'sina'), {}),
  # --- Rak Sejarah (tambahan) ---
  ('tarikhthabari', '0310Tabari.Tarikh.Shamela0009783BK1-ara1.mARkdown',
    M('Tarikh ar-Rusul wal-Muluk (Tarikh ath-Thabari)', 'تاريخ الرسل والملوك', 'Ath-Thabari', 'محمد بن جرير الطبري', 310, 'tarikh'), {}),
