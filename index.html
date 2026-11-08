@@ -490,8 +490,8 @@ html,body{overflow-x:clip}
 .bc-tags i{font-style:normal;font-size:.66rem;font-weight:700;letter-spacing:.04em;border:1px solid var(--line);border-radius:4px;padding:0 4px;color:var(--muted)}
 .bc-tags i.on{background:var(--gold-soft);border-color:var(--gold);color:var(--ink)}
 .bc-tags i.mk{border:0;color:#B23A3A}.bc-tags i.mk svg{width:10px;height:12px}
-.cbar{position:sticky;top:calc(env(safe-area-inset-top,0px) + 52px);z-index:15;background:var(--bg);padding:8px 0 6px;border-bottom:1px solid var(--line);display:grid;gap:8px}
-.cbar h2{margin:0}
+.cbar{padding:8px 0 10px;display:grid;gap:8px}
+.cbar h2{margin:0;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}.cbar-ar{font-family:var(--f-ar);color:var(--gold);font-weight:400}
 .ctools{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .ctools input[type=search]{flex:1;min-width:160px;max-width:340px;border:1px solid var(--line);border-radius:999px;padding:7px 14px;background:var(--paper);color:var(--ink);font:inherit;font-size:.88rem}
 .tog{display:inline-flex;gap:6px;align-items:center;font-size:.84rem;color:var(--muted);cursor:pointer}
@@ -507,7 +507,7 @@ html,body{overflow-x:clip}
 .cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
 #cbody .library{margin-top:14px}
 .empty{color:var(--muted);padding:20px 0}
-@media (max-width:560px){.cbar{position:static}.cgrid{grid-template-columns:1fr}.hrow .bcard,.ccard,.path{width:78vw;max-width:290px}.dcard{padding:14px}.hsearch .btn{padding:8px 12px}}
+@media (max-width:560px){.cgrid{grid-template-columns:1fr}.hrow .bcard,.ccard,.path{width:78vw;max-width:290px}.dcard{padding:14px}.hsearch .btn{padding:8px 12px}}
 </style>
 
 </head>
@@ -763,10 +763,10 @@ function renderLib(){
     </section>
     ${cont.length?`<section class="hsec"><h2>${esc(t("resume"))}</h2><div class="hrow">${cont.map(([b,s,n,isLast])=>`<a class="ccard${isLast?" last":""}" href="${atLink(b.id,s,n)}">${miniCover(b)}<span><b>${esc(bookTitle(b))}</b><small>${isLast?esc(t("lastRead")):RIB_F+" "+esc(t("marks"))} · ${esc(unitOf(b))} ${fmt(n)}</small></span></a>`).join("")}</div></section>`:""}
     <section class="hsec catalog" id="catalog"><div class="cbar">
-      <h2>📚 ${esc(t("catalogT"))}</h2>
+      <h2>${esc(t("catalogT"))} <span class="cbar-ar">خزانة العلم</span></h2>
       <div class="ctools"><input id="cq" type="search" placeholder="${esc(t("filterPh"))}" aria-label="${esc(t("filterPh"))}">
         <label class="tog"><input type="checkbox" id="cid" ${S.hid?"checked":""}> ${esc(t("onlyId"))}</label>
-        <div class="seg" role="group" aria-label="View"><button data-hv="shelf" aria-pressed="${S.hv==="shelf"}">📚 ${esc(t("viewShelf"))}</button><button data-hv="cards" aria-pressed="${S.hv==="cards"}">▦ ${esc(t("viewCards"))}</button></div></div>
+        <div class="seg" role="group" aria-label="View"><button data-hv="shelf" aria-pressed="${S.hv==="shelf"}">${esc(t("viewShelf"))}</button><button data-hv="cards" aria-pressed="${S.hv==="cards"}">${esc(t("viewCards"))}</button></div></div>
       <div class="cchips" role="tablist"><button data-hc="all" aria-pressed="${S.hc==="all"}">${esc(t("allBooks"))} <small>${fmt(cats.reduce((a,c)=>a+c[3].length,0))}</small></button>${cats.map(([k,l,ar,bs])=>`<button data-hc="${k}" aria-pressed="${S.hc===k}">${esc(t(l))} <small>${fmt(bs.length)}</small></button>`).join("")}</div>
     </div><div id="cbody"></div></section>
     <section class="hsec daily" id="daily" aria-live="polite"></section>
