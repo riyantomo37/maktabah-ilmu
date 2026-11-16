@@ -524,6 +524,10 @@ body.focus .setpanel{bottom:calc(74px + env(safe-area-inset-bottom,0px))}
 body.focus #fhandle{display:flex;position:fixed;z-index:36;right:calc(10px + env(safe-area-inset-right,0px));bottom:calc(10px + env(safe-area-inset-bottom,0px));width:40px;height:40px;border-radius:50%;align-items:center;justify-content:center;border:1px solid var(--line);background:color-mix(in srgb,var(--paper) 92%,transparent);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);color:var(--gold);border-color:color-mix(in srgb,var(--gold) 55%,transparent);opacity:.9;box-shadow:0 4px 14px var(--shadow);transition:opacity .25s,transform .25s;cursor:pointer;padding:0}
 body.focus #fhandle:hover{opacity:1}
 body.focus.ctl #fhandle{opacity:0;pointer-events:none;transform:scale(.8)}
+
+/* kembali ke rak: sorot kitab yang tadi dibaca */
+.bk.here,.bcard.here{animation:hereGlow 2.4s ease-out 1}
+@keyframes hereGlow{0%,35%{box-shadow:0 0 0 3px var(--gold),0 0 24px 6px color-mix(in srgb,var(--gold) 70%,transparent);transform:translateY(-10px)}100%{box-shadow:none;transform:none}}
 </style>
 
 </head>
@@ -826,9 +830,23 @@ function renderLib(){
   app.querySelectorAll("[data-hv]").forEach(b=>b.onclick=()=>{S.hv=b.dataset.hv;store.set("hv2",S.hv);app.querySelectorAll("[data-hv]").forEach(x=>x.setAttribute("aria-pressed",x===b));draw()});
   document.getElementById("cid").onchange=e=>{S.hid=e.target.checked;store.set("hid",S.hid);draw()};
   let tm=0;document.getElementById("cq").oninput=e=>{clearTimeout(tm);tm=setTimeout(()=>{S.hq=e.target.value.trim().toLowerCase();draw()},120)};
-  draw(); drawDaily();
+  draw(); drawDaily(); returnToShelf();
   app.querySelectorAll(".installbtn").forEach(b=>b.onclick=doInstall);
   bindLang(app,render);
+}
+function returnToShelf(){
+  const id=S.backBook, y=S.homeY;S.backBook=null;S.homeY=null;
+  if(!id&&y==null)return;
+  const B=id&&findBook(id), ids=id?[id,...((B&&B.pairs)||[])]:[];
+  const box=document.getElementById("cbody");
+  const find=()=>{for(const k of ids){const el=box&&(box.querySelector(`[data-book="${k}"]`)||box.querySelector(`a.bcard[href="#kitab-${k}"]`));if(el)return el}return null};
+  let el=find();
+  if(!el&&ids.length&&S.hc!=="all"){S.hc="all";app.querySelectorAll("[data-hc]").forEach(x=>x.setAttribute("aria-pressed",x.dataset.hc==="all"));renderCatalog(catBooks());el=find()}
+  if(!el){if(y!=null)requestAnimationFrame(()=>scrollTo(0,y));return}
+  const shelf=el.closest(".shelfwrap");if(shelf)shelf.classList.add("in");
+  requestAnimationFrame(()=>{(shelf||el).scrollIntoView({block:"center"});
+    const row=el.closest(".row2");if(row){const r=el.getBoundingClientRect(),rr=row.getBoundingClientRect();row.scrollLeft+=r.left-rr.left-(rr.width-r.width)/2}
+    el.classList.add("here");setTimeout(()=>el.classList.remove("here"),2600)});
 }
 function renderCatalog(cats){
   const box=document.getElementById("cbody");if(!box)return;
@@ -1381,6 +1399,9 @@ async function render(){
   setLangClass();
   try{await loadIndex()}catch(e){app.innerHTML=`<div class="loading">${esc(t("err"))}</div>`;return}
   const r=route();
+  if(S.prevV==="lib"&&r.v!=="lib")S.homeY=scrollY;
+  if((r.v==="book"||r.v==="read")&&r.b)S.backBook=r.b;
+  S.prevV=r.v;
   {const B=r.b&&r.b!=="all"&&findBook(r.b);document.title=(B?bookTitle(B)+(B.ar&&B.ar!==bookTitle(B)?" · "+B.ar:"")+" — ":r.v==="search"&&r.q?r.q+" — ":r.v==="zaman"?t("eraT")+" — ":"")+"Maktabah Ilmu · مكتبة العلم"}
   window.onscroll=null;
   if(r.v!=="read"){S.focus=false;document.body.classList.remove("focus")}
