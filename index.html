@@ -670,6 +670,11 @@ body.bookroom .top .brand b{color:#F3E4C0}
   @keyframes flapClose{0%{transform:rotateY(-165deg)}100%{transform:rotateY(0)}}
 }
 @media (prefers-reduced-motion:reduce){.obook .obk-flap{display:none!important}.obook *{animation:none!important}}
+
+/* selembar halaman yang dibalik saat masuk ke halaman baca */
+.obk-leaf{position:absolute;z-index:7;transform-origin:left center;transform-style:preserve-3d;pointer-events:none}
+.obk-leaf .lf{position:absolute;inset:0;-webkit-backface-visibility:hidden;backface-visibility:hidden;overflow:hidden;background:#F7EFDA;padding:34px 40px 40px;border-radius:0 6px 6px 0;box-shadow:inset 26px 0 34px -22px rgba(60,40,10,.45),0 10px 30px -10px rgba(0,0,0,.45)}
+.obk-leaf .lf.back{transform:rotateY(180deg);border-radius:6px 0 0 6px;padding:0;background:linear-gradient(90deg,#efe4c6,#F7EFDA 30%);box-shadow:inset -26px 0 34px -22px rgba(60,40,10,.45)}
 </style>
 
 </head>
@@ -1007,7 +1012,7 @@ function takeBook(el,id){
 async function arriveBook(b){
   const ob=document.getElementById("obook");if(!ob)return;
   const fromRead=S.fromV==="read";const ff=S.flyFrom;S.flyFrom=null;
-  if(reduceMotion()||fromRead){ob.classList.add("open");return}
+  if(reduceMotion()||fromRead){ob.classList.add("open");if(fromRead&&S.exitRead&&!reduceMotion())ob.animate([{transform:"scale(1.1)",opacity:0},{transform:"none",opacity:1}],{duration:420,easing:"ease-out"});S.exitRead=false;return}
   if(ff&&ff.id===b.id){
     ob.classList.add("arriving");
     await new Promise(r=>requestAnimationFrame(r));
@@ -1042,6 +1047,19 @@ async function landBook(el){
   el.style.visibility="";fl.remove();
   el.classList.add("settle");setTimeout(()=>el.classList.remove("settle"),500);
   return true}
+/* masuk ke halaman baca: balik selembar halaman lalu "mendekat" ke buku */
+async function enterReader(hash){
+  const ob=document.getElementById("obook");
+  if(reduceMotion()||!ob||!ob.classList.contains("open"))return go(hash);
+  const r=ob.querySelector(".obk-r"),wide=getComputedStyle(ob.querySelector(".obk-pages")).gridTemplateColumns.trim().split(/\s+/).length>1;
+  if(wide&&r){const lf=document.createElement("div");lf.className="obk-leaf";
+    lf.style.cssText=`left:${r.offsetLeft}px;top:${r.offsetTop}px;width:${r.offsetWidth}px;height:${r.offsetHeight}px`;
+    lf.innerHTML=`<div class="lf front"></div><div class="lf back"></div>`;
+    const fr=lf.querySelector(".front");fr.innerHTML=r.innerHTML;fr.scrollTop=r.scrollTop;
+    ob.querySelector(".obk-pages").appendChild(lf);
+    try{await lf.animate([{transform:"rotateY(0deg)"},{transform:"rotateY(-180deg)"}],{duration:720,easing:"cubic-bezier(.45,.05,.25,1)",fill:"forwards"}).finished}catch(e){}}
+  try{await ob.animate([{transform:"none",opacity:1},{transform:"scale(1.12)",opacity:0}],{duration:340,easing:"ease-in",fill:"forwards"}).finished}catch(e){}
+  S.enterRead=true;go(hash)}
 function returnToShelf(){
   const id=S.backBook, y=S.homeY;S.backBook=null;S.homeY=null;
   if(!id&&y==null)return;
@@ -1136,7 +1154,8 @@ function renderBook(id){
     </div>
     <div class="obk-flap" aria-hidden="true"><div class="ff front">${coverHTML(b)}</div><div class="ff back"></div></div>
   </div></main>`;
-  app.querySelectorAll("#toc button").forEach(x=>x.onclick=()=>go(`read-${id}-${x.dataset.s}`));
+  app.querySelectorAll("#toc button").forEach(x=>x.onclick=()=>enterReader(`read-${id}-${x.dataset.s}`));
+  app.querySelectorAll('.obk-l .resume a[href^="#read-"]').forEach(a=>a.onclick=e=>{e.preventDefault();enterReader(a.getAttribute("href").slice(1))});
   app.querySelectorAll(".obk-l .back").forEach(x=>x.onclick=e=>{e.preventDefault();closeBook(b)});
   arriveBook(b);
   const bks=document.getElementById("bkshare");if(bks)bks.onclick=async()=>{const url=location.origin+location.pathname.replace(/[^/]*$/,"")+"k/"+id+".html",text=bookTitle(b)+" · "+b.ar+" — Maktabah Ilmu";
@@ -1203,6 +1222,8 @@ async function renderRead(bid,sk,anchorN){
   </div>
   ${S.focus&&S.mode!=="book"?`<div class="fexit"><button class="iconbtn markbtn" aria-label="${esc(t("mark"))}">${RIB_O}</button><button class="iconbtn" id="focusexit" aria-label="${esc(t("exitFocus"))}" title="${esc(t("exitFocus"))}">✕</button></div>`:""}
   <main id="rmain"><div class="loading">${esc(t("loading"))}</div></main>`;
+  {const rm=document.getElementById("rmain");if(S.enterRead&&!reduceMotion())rm.animate([{opacity:0,transform:"scale(.96)"},{opacity:1,transform:"none"}],{duration:480,easing:"cubic-bezier(.2,.7,.2,1)"});S.enterRead=false;
+   const bk=app.querySelector(`.rbar a[href="#kitab-${bid}"]`);if(bk)bk.onclick=e=>{if(reduceMotion())return;e.preventDefault();rm.animate([{opacity:1,transform:"none"},{opacity:0,transform:"scale(.95)"}],{duration:260,easing:"ease-in",fill:"forwards"}).finished.then(()=>{S.exitRead=true;go("kitab-"+bid)})}}
   document.body.classList.toggle("focus",!!S.focus);
   app.querySelectorAll("[data-layout]").forEach(x=>x.onclick=()=>{S.layout=x.dataset.layout;store.set("layout",S.layout);rerender()});
   app.querySelectorAll("[data-fit]").forEach(x=>x.onclick=()=>{S.fit=x.dataset.fit;store.set("fit",S.fit);rerender()});
